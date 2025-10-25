@@ -28,19 +28,16 @@ defineProps({
         </template>
 
         <div class="py-12 bg-animated-yellow relative overflow-hidden">
-            <!-- Floating corner bananas -->
             <div class="absolute left-6 top-6 banana-header-icon animate-float-y">🍌</div>
             <div class="absolute right-6 bottom-6 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
             
             <div class="mx-auto max-w-4xl space-y-8 sm:px-6 lg:px-8">
-                <!-- Profile Header -->
                 <div class="text-center mb-8">
                     <div class="text-6xl mb-4 animate-float-y">👤</div>
                     <h1 class="text-3xl font-bold text-yellow-800 mb-2">Profile Settings</h1>
                     <p class="text-yellow-700">Manage your account information and preferences</p>
                 </div>
 
-                <!-- Profile Information Card -->
                 <div class="profile-card">
                     <div class="profile-card-header">
                         <div class="flex items-center gap-3">
@@ -56,7 +53,6 @@ defineProps({
                     />
                 </div>
 
-                <!-- Password Security Card -->
                 <div class="profile-card">
                     <div class="profile-card-header">
                         <div class="flex items-center gap-3">
@@ -68,7 +64,6 @@ defineProps({
                     <UpdatePasswordForm class="max-w-none" />
                 </div>
 
-                <!-- Danger Zone Card -->
                 <div class="profile-card border-red-200">
                     <div class="profile-card-header">
                         <div class="flex items-center gap-3">

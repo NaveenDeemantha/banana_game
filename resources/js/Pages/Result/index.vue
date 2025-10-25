@@ -2,7 +2,6 @@
 import { Link } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 
-// In a real app, these would come from props or URL params
 const gameResults = ref({
   score: 85,
   totalQuestions: 15,
@@ -37,7 +36,6 @@ function getPerformanceMessage(score) {
 
 <template>
   <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center relative overflow-hidden">
-    <!-- Floating corner bananas -->
     <div class="absolute left-6 top-6 banana-header-icon animate-float-y">🍌</div>
     <div class="absolute right-6 bottom-6 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
 
