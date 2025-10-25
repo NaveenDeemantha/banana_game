@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center relative overflow-hidden">
-    <!-- Floating corner bananas -->
     <div class="absolute left-6 top-6 banana-header-icon animate-float-y">🍌</div>
     <div class="absolute right-6 bottom-6 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
 
@@ -30,9 +29,8 @@
         </div>
       </div>
 
-      <!-- TESTING SECTION - Shows the correct answer for debugging -->
       <div v-if="solution !== null" class="mb-4 p-3 bg-red-100 border-2 border-red-300 rounded-xl text-center">
-        <div class="text-red-600 font-bold text-sm mb-1"> TESTING MODE </div>
+        <div class="text-red-600 font-bold text-sm mb-1">🔧 TESTING MODE</div>
         <div class="text-red-800 font-bold text-lg">Correct Answer: {{ solution }}</div>
         <div class="text-red-500 text-xs mt-1">Remove this section before production!</div>
       </div>
@@ -97,11 +95,9 @@ async function fetchQuestion() {
   try {
     const res = await fetch('https://marcconrad.com/uob/banana/api.php?out=json&base64=yes');
     const data = await res.json();
-    // API returns { question: <base64string>, solution: <number> }
     if (data && data.question) {
       imageSrc.value = `data:image/png;base64,${data.question}`;
       solution.value = data.solution;
-      // reset timer
       remaining.value = levelTimes[levelParam] ?? 12;
       startTimer();
     } else {
@@ -121,7 +117,7 @@ function startTimer() {
     remaining.value -= 1;
     if (remaining.value <= 0) {
       clearTimer();
-      handleSubmit(true); // timed out
+      handleSubmit(true);
     }
   }, 1000);
 }
@@ -144,7 +140,6 @@ function handleSubmit(timedOut = false) {
   } else {
     feedback.value = { ok: false, message: `Wrong — answer was ${solution.value}` };
   }
-  // show feedback then fetch next after a short delay
   setTimeout(() => {
     answer.value = '';
     fetchQuestion();

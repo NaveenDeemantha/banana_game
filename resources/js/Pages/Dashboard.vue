@@ -132,7 +132,7 @@ const recentGames = [
                 </div>
 
                 <!-- Achievement Section -->
-                <div class="banana-card mt-8">
+                <!-- <div class="banana-card mt-8">
                     <h3 class="text-xl font-bold text-yellow-700 mb-6 flex items-center gap-2">
                         <span>🏅</span>
                         Recent Achievements
@@ -154,7 +154,7 @@ const recentGames = [
                             <div class="text-sm text-blue-700">Completed hard mode in under 2 min</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </AuthenticatedLayout>

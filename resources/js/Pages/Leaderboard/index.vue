@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-animated-yellow flex flex-col items-center p-8 relative overflow-hidden">
-    <!-- Floating corner bananas -->
     <div class="absolute left-6 top-6 banana-header-icon animate-float-y">🍌</div>
     <div class="absolute right-6 bottom-6 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
 

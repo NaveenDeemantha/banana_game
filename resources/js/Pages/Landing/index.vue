@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center text-center overflow-hidden relative">
-    <!-- Enhanced Floating Banana Decorations -->
     <div class="absolute top-10 left-10 banana-header-icon animate-float-y">🍌</div>
     <div class="absolute bottom-10 right-10 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
     <div class="absolute top-1/3 right-10 banana-header-icon animate-float-y" style="animation-delay: 2s;">🍌</div>
@@ -16,7 +15,6 @@
           Test your math speed and catch bananas before the timer runs out! Race against time in this exciting mathematical adventure. 🕒
         </p>
 
-        <!-- Feature highlights -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div class="bg-yellow-100/50 rounded-lg p-4">
             <div class="text-2xl mb-2">⚡</div>

@@ -1,12 +1,10 @@
 <template>
   <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center relative overflow-hidden">
-    <!-- Enhanced floating decorations -->
     <div class="absolute left-6 top-6 banana-header-icon animate-float-y">🍌</div>
     <div class="absolute right-6 bottom-6 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
     <div class="absolute top-1/4 right-8 banana-header-icon animate-float-y" style="animation-delay: 2s;">🍌</div>
     <div class="absolute bottom-1/4 left-8 banana-header-icon animate-float-y" style="animation-delay: 0.5s;">🍌</div>
 
-    <!-- Welcome Section -->
     <transition name="welcome">
       <div v-if="showWelcome" class="text-center mb-12">
         <div class="text-8xl mb-6 animate-float-y">🍌</div>
@@ -19,7 +17,6 @@
       </div>
     </transition>
 
-    <!-- Menu Section -->
     <transition name="menu">
       <div v-if="showMenu" class="w-full max-w-4xl px-4">
         <div class="banana-card">
@@ -45,44 +42,10 @@
               </div>
             </Link>
           </div>
-
-          <!-- Quick Stats Section -->
-          <!-- <div class="mt-8 pt-6 border-t border-yellow-200">
-            <h3 class="text-lg font-semibold text-yellow-700 mb-4 text-center flex items-center justify-center gap-2">
-              <span>📊</span>
-              Quick Stats
-            </h3>
-            <div class="grid grid-cols-3 gap-4">
-              <div class="text-center">
-                <div class="text-2xl font-bold text-blue-600">42</div>
-                <div class="text-sm text-yellow-700">Games Played</div>
-              </div>
-              <div class="text-center">
-                <div class="text-2xl font-bold text-green-600">87</div>
-                <div class="text-sm text-yellow-700">Best Score</div>
-              </div>
-              <div class="text-center">
-                <div class="text-2xl font-bold text-orange-600">5</div>
-                <div class="text-sm text-yellow-700">Win Streak</div>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- Achievement Preview -->
-          <!-- <div class="mt-6 bg-yellow-100/50 rounded-lg p-4">
-            <div class="flex items-center justify-center gap-3">
-              <div class="text-2xl">🏅</div>
-              <div class="text-center">
-                <div class="font-medium text-yellow-800">Recent Achievement</div>
-                <div class="text-sm text-yellow-700">Speed Demon - Completed 5 questions in under 30 seconds!</div>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
     </transition>
 
-    <!-- Footer hint -->
     <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2">
       <div class="text-yellow-600/60 text-sm animate-pulse">
         🍌 Catch bananas, solve math, have fun! 🍌
