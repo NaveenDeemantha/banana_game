@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+	/* subtle floating animation for the banana icon */
+	@keyframes float-y {
+		0% { transform: translateY(0); }
+		50% { transform: translateY(-6px); }
+		100% { transform: translateY(0); }
+	}
+
+	.animate-float-y {
+		animation: float-y 3s ease-in-out infinite;
+	}
+
+	/* gentle gradient background animation */
+	@keyframes bg-pan {
+		0% { background-position: 0% 50%; }
+		50% { background-position: 100% 50%; }
+		100% { background-position: 0% 50%; }
+	}
+
+	.bg-animated-yellow {
+		background: linear-gradient(120deg, #fffbea 0%, #fff7cc 40%, #fffbe6 100%);
+		background-size: 200% 200%;
+		animation: bg-pan 10s ease infinite;
+	}
+
+	/* Banana-themed card used around partials */
+	.banana-card {
+		@apply bg-yellow-50/80 border border-yellow-100 rounded-lg p-6 shadow-sm transition-transform transform hover:scale-[1.01] hover:shadow-md;
+	}
+
+	.banana-header-icon {
+		@apply text-2xl select-none inline-block mr-2;
+	}
+}

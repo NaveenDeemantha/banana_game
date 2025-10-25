@@ -1,0 +1,186 @@
+<template>
+  <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center relative overflow-hidden">
+    <!-- Enhanced floating decorations -->
+    <div class="absolute left-6 top-6 banana-header-icon animate-float-y">🍌</div>
+    <div class="absolute right-6 bottom-6 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
+    <div class="absolute top-1/4 right-8 banana-header-icon animate-float-y" style="animation-delay: 2s;">🍌</div>
+    <div class="absolute bottom-1/4 left-8 banana-header-icon animate-float-y" style="animation-delay: 0.5s;">🍌</div>
+
+    <!-- Welcome Section -->
+    <transition name="welcome">
+      <div v-if="showWelcome" class="text-center mb-12">
+        <div class="text-8xl mb-6 animate-float-y">🍌</div>
+        <h1 class="text-6xl font-bold text-yellow-800 mb-4 drop-shadow-lg">
+          Welcome Back!
+        </h1>
+        <p class="text-xl text-yellow-700/80 max-w-md mx-auto">
+          Ready to catch some bananas and test your math skills?
+        </p>
+      </div>
+    </transition>
+
+    <!-- Menu Section -->
+    <transition name="menu">
+      <div v-if="showMenu" class="w-full max-w-4xl px-4">
+        <div class="banana-card">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Link 
+              v-for="(item, index) in menuItems" 
+              :key="index"
+              :href="item.href" 
+              :class="[item.bgColor, item.hoverColor]"
+              class="menu-card group"
+              :style="{ animationDelay: `${index * 150}ms` }"
+            >
+              <div class="flex items-center justify-between mb-4">
+                <div class="text-4xl group-hover:animate-bounce">{{ item.icon }}</div>
+                <div class="w-2 h-2 bg-white/50 rounded-full group-hover:scale-150 transition-transform"></div>
+              </div>
+              <div class="text-left">
+                <h3 class="text-xl font-bold text-white mb-2">{{ item.title }}</h3>
+                <p class="text-white/80 text-sm leading-relaxed">{{ item.description }}</p>
+              </div>
+              <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div class="text-white text-xl">→</div>
+              </div>
+            </Link>
+          </div>
+
+          <!-- Quick Stats Section -->
+          <!-- <div class="mt-8 pt-6 border-t border-yellow-200">
+            <h3 class="text-lg font-semibold text-yellow-700 mb-4 text-center flex items-center justify-center gap-2">
+              <span>📊</span>
+              Quick Stats
+            </h3>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="text-center">
+                <div class="text-2xl font-bold text-blue-600">42</div>
+                <div class="text-sm text-yellow-700">Games Played</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-green-600">87</div>
+                <div class="text-sm text-yellow-700">Best Score</div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-orange-600">5</div>
+                <div class="text-sm text-yellow-700">Win Streak</div>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Achievement Preview -->
+          <!-- <div class="mt-6 bg-yellow-100/50 rounded-lg p-4">
+            <div class="flex items-center justify-center gap-3">
+              <div class="text-2xl">🏅</div>
+              <div class="text-center">
+                <div class="font-medium text-yellow-800">Recent Achievement</div>
+                <div class="text-sm text-yellow-700">Speed Demon - Completed 5 questions in under 30 seconds!</div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </transition>
+
+    <!-- Footer hint -->
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2">
+      <div class="text-yellow-600/60 text-sm animate-pulse">
+        🍌 Catch bananas, solve math, have fun! 🍌
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { Link } from '@inertiajs/vue3';
+import { ref, onMounted } from 'vue';
+
+const showWelcome = ref(false);
+const showMenu = ref(false);
+
+onMounted(() => {
+  setTimeout(() => {
+    showWelcome.value = true;
+  }, 300);
+  setTimeout(() => {
+    showMenu.value = true;
+  }, 800);
+});
+
+const menuItems = [
+  {
+    href: '/difficulty',
+    title: 'Start Game',
+    description: 'Choose your difficulty and begin',
+    icon: '🎮',
+    bgColor: 'bg-gradient-to-br from-yellow-400 to-yellow-500',
+    hoverColor: 'hover:from-yellow-500 hover:to-yellow-600'
+  },
+  {
+    href: '/leaderboard',
+    title: 'Leaderboard',
+    description: 'See who\'s the top banana catcher',
+    icon: '🏆',
+    bgColor: 'bg-gradient-to-br from-green-400 to-green-500',
+    hoverColor: 'hover:from-green-500 hover:to-green-600'
+  },
+  {
+    href: '/profile',
+    title: 'Profile',
+    description: 'Manage your account settings',
+    icon: '👤',
+    bgColor: 'bg-gradient-to-br from-blue-400 to-blue-500',
+    hoverColor: 'hover:from-blue-500 hover:to-blue-600'
+  },
+  {
+    href: '/settings',
+    title: 'Settings',
+    description: 'Customize your game experience',
+    icon: '⚙️',
+    bgColor: 'bg-gradient-to-br from-orange-400 to-orange-500',
+    hoverColor: 'hover:from-orange-500 hover:to-orange-600'
+  }
+];
+</script>
+
+<style scoped>
+.welcome-enter-active {
+  transition: all 0.8s ease-out;
+}
+.welcome-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.menu-enter-active {
+  transition: all 1s ease-out;
+}
+.menu-enter-from {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.menu-card {
+  @apply relative p-6 rounded-2xl text-white shadow-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl animate-fade-in-up;
+}
+
+.banana-card {
+  @apply bg-yellow-50/95 border border-yellow-200 rounded-2xl p-8 shadow-lg backdrop-blur-sm;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+  opacity: 0;
+}
+</style>
