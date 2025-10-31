@@ -31,19 +31,19 @@ Feel free to clone the repo, tweak the graphics, add new mechanics or integrate 
 
 Follow these steps to run the game locally:
 
-1. Clone the repository
+1. Clone the repository:
 git clone https://github.com/NaveenDeemantha/banana_game.git
 
-2. Navigate into the project folder
+2. Navigate into the project folder:
 cd banana_game
 
-3. Install dependencies (Vue)
+3. Install dependencies (Vue):
 npm install
 
-4. Start the Vue development server
+4. Start the Vue development server:
 npm run dev
 
-5. Start the PHP backend server
+5. Start the PHP backend server:
 php artisan serve
 
 6. Open your browser at the given local URL (usually http://127.0.0.1:8000)
