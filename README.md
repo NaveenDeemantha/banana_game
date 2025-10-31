@@ -27,6 +27,27 @@ Simple interface ready for extension or theme-customisation
 
 Feel free to clone the repo, tweak the graphics, add new mechanics or integrate your own API – and don’t hesitate to drop suggestions or improvements!
 
+## Getting Started
+
+Follow these steps to run the game locally:
+
+# 1. Clone the repository
+git clone https://github.com/NaveenDeemantha/banana_game.git
+
+# 2. Navigate into the project folder
+cd banana_game
+
+# 3. Install dependencies (Vue)
+npm install
+
+# 4. Start the Vue development server
+npm run dev
+
+# 5. Start the PHP backend server
+php artisan serve
+
+# 6. Open your browser at the given local URL (usually http://127.0.0.1:8000)
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
