@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -44,5 +45,27 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the game scores for the user.
+     */
+    public function gameScores(): HasMany
+    {
+        return $this->hasMany(GameScore::class);
+    }
+
+    /**
+     * Get the user's best score for a specific difficulty.
+     */
+    public function bestScore(string $difficulty = null)
+    {
+        $query = $this->gameScores();
+        
+        if ($difficulty) {
+            $query->where('difficulty', $difficulty);
+        }
+        
+        return $query->max('score') ?? 0;
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GameScoreController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,14 @@ Route::get('/leaderboard', function () {
 Route::get('/settings', function () {
     return Inertia::render('Settings/index');
 })->name('settings');
+
+// API routes for game scores
+Route::middleware('auth')->group(function () {
+    Route::post('/api/scores', [GameScoreController::class, 'store'])->name('scores.store');
+    Route::get('/api/scores/history', [GameScoreController::class, 'userHistory'])->name('scores.history');
+});
+
+Route::get('/api/leaderboard', [GameScoreController::class, 'leaderboard'])->name('leaderboard.api');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
