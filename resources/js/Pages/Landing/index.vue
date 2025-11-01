@@ -1,5 +1,25 @@
 <template>
   <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center text-center overflow-hidden relative">
+    <!-- User Menu in Top Right -->
+    <div class="absolute top-6 right-6 z-10">
+      <div v-if="$page.props.auth?.user" class="flex items-center gap-3">
+        <Link 
+          href="/home"
+          class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
+        >
+          🏠 Home
+        </Link>
+        <Link 
+          :href="route('logout')" 
+          method="post" 
+          as="button"
+          class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
+        >
+          🚪 Logout
+        </Link>
+      </div>
+    </div>
+
     <div class="absolute top-10 left-10 banana-header-icon animate-float-y">🍌</div>
     <div class="absolute bottom-10 right-10 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
     <div class="absolute top-1/3 right-10 banana-header-icon animate-float-y" style="animation-delay: 2s;">🍌</div>
