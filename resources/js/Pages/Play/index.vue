@@ -117,6 +117,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
+import axios from 'axios';
 
 const page = usePage();
 const levelParam = new URLSearchParams(window.location.search).get('level') || 'easy';
@@ -221,20 +222,15 @@ async function endGame() {
     try {
       const timeTaken = Math.floor((Date.now() - gameStartTime.value) / 1000);
       
-      await fetch('/api/scores', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
-        body: JSON.stringify({
-          score: currentScore.value,
-          correct_answers: correctAnswers.value,
-          total_questions: totalQuestions.value,
-          difficulty: levelParam,
-          time_taken: timeTaken,
-        }),
+      await axios.post('/api/scores', {
+        score: currentScore.value,
+        correct_answers: correctAnswers.value,
+        total_questions: totalQuestions.value,
+        difficulty: levelParam,
+        time_taken: timeTaken,
       });
+      
+      console.log('Score saved successfully!');
     } catch (error) {
       console.error('Failed to save score:', error);
     }

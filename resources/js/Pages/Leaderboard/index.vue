@@ -132,6 +132,7 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 const page = usePage();
 const players = ref([]);
@@ -172,11 +173,10 @@ async function fetchLeaderboard() {
     }
     params.append('limit', '10');
     
-    const response = await fetch(`/api/leaderboard?${params.toString()}`);
-    const data = await response.json();
+    const response = await axios.get(`/api/leaderboard?${params.toString()}`);
     
-    if (data.success) {
-      players.value = data.data;
+    if (response.data.success) {
+      players.value = response.data.data;
     }
   } catch (error) {
     console.error('Failed to fetch leaderboard:', error);
@@ -189,15 +189,10 @@ async function fetchUserStats() {
   if (!page.props.auth?.user) return;
   
   try {
-    const response = await fetch('/api/scores/history', {
-      headers: {
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-      },
-    });
-    const data = await response.json();
+    const response = await axios.get('/api/scores/history');
     
-    if (data.success) {
-      userStats.value = data.stats;
+    if (response.data.success) {
+      userStats.value = response.data.stats;
     }
   } catch (error) {
     console.error('Failed to fetch user stats:', error);

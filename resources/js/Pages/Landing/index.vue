@@ -1,83 +1,111 @@
 <template>
-  <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center text-center overflow-hidden relative">
-    <!-- User Menu in Top Right -->
-    <div class="absolute top-6 right-6 z-10">
-      <div v-if="$page.props.auth?.user" class="flex items-center gap-3">
+  <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center overflow-hidden relative">
+    <!-- Navigation Bar -->
+    <nav class="absolute top-0 left-0 right-0 z-20 px-6 py-4">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <span class="text-4xl">🍌</span>
+          <span class="text-2xl font-bold text-gray-800">Banana Catcher</span>
+        </div>
+        <div v-if="$page.props.auth?.user" class="flex items-center gap-3">
+          <Link 
+            href="/home"
+            class="btn-secondary"
+          >
+            Home
+          </Link>
+          <Link 
+            :href="route('logout')" 
+            method="post" 
+            as="button"
+            class="btn-danger"
+          >
+            Logout
+          </Link>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Floating Decorative Elements -->
+    <div class="absolute top-20 left-10 banana-icon-sm animate-float-smooth">🍌</div>
+    <div class="absolute bottom-20 right-10 banana-icon-sm animate-float-smooth" style="animation-delay: 1s;">🍌</div>
+    <div class="absolute top-1/3 right-16 banana-icon-sm animate-float-smooth" style="animation-delay: 2s;">🍌</div>
+    <div class="absolute bottom-1/3 left-16 banana-icon-sm animate-float-smooth" style="animation-delay: 0.5s;">🍌</div>
+
+    <!-- Hero Section -->
+    <div class="max-w-6xl mx-auto px-6 text-center z-10">
+      <div class="mb-8 animate-pulse-subtle">
+        <div class="banana-icon">🍌</div>
+      </div>
+      
+      <h1 class="heading-1 mb-6 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+        Banana Catcher
+      </h1>
+      
+      <p class="text-xl md:text-2xl text-gray-700 mb-12 max-w-2xl mx-auto font-medium">
+        Test your math skills and reflexes! Solve equations before time runs out in this exciting mathematical adventure.
+      </p>
+
+      <!-- Feature Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="stat-card">
+          <div class="text-4xl mb-3">⚡</div>
+          <h3 class="font-bold text-gray-800 mb-2">Fast-Paced</h3>
+          <p class="text-sm text-muted">Race against the clock</p>
+        </div>
+        <div class="stat-card">
+          <div class="text-4xl mb-3">🎯</div>
+          <h3 class="font-bold text-gray-800 mb-2">Multiple Levels</h3>
+          <p class="text-sm text-muted">Easy, Medium, and Hard</p>
+        </div>
+        <div class="stat-card">
+          <div class="text-4xl mb-3">🏆</div>
+          <h3 class="font-bold text-gray-800 mb-2">Compete</h3>
+          <p class="text-sm text-muted">Climb the leaderboard</p>
+        </div>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
         <Link 
-          href="/home"
-          class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
+          v-if="$page.props.auth?.user"
+          href="/difficulty" 
+          class="btn-primary text-lg px-8 py-4"
         >
-          🏠 Home
+          Start Playing
         </Link>
+        <template v-else>
+          <Link 
+            :href="route('register')" 
+            class="btn-primary text-lg px-8 py-4"
+          >
+            Get Started
+          </Link>
+          <Link 
+            :href="route('login')" 
+            class="btn-secondary text-lg px-8 py-4"
+          >
+            Login
+          </Link>
+        </template>
         <Link 
-          :href="route('logout')" 
-          method="post" 
-          as="button"
-          class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
+          href="/leaderboard" 
+          class="btn-secondary text-lg px-8 py-4"
         >
-          🚪 Logout
+          View Leaderboard
         </Link>
       </div>
     </div>
 
-    <div class="absolute top-10 left-10 banana-header-icon animate-float-y">🍌</div>
-    <div class="absolute bottom-10 right-10 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
-    <div class="absolute top-1/3 right-10 banana-header-icon animate-float-y" style="animation-delay: 2s;">🍌</div>
-    <div class="absolute bottom-1/3 left-10 banana-header-icon animate-float-y" style="animation-delay: 0.5s;">🍌</div>
-
-    <transition name="fade">
-      <div class="banana-card max-w-2xl mx-4">
-        <div class="text-8xl mb-6 animate-float-y">🍌</div>
-        <h1 class="text-6xl font-extrabold text-yellow-700 drop-shadow-lg mb-6">
-          Banana Catcher
-        </h1>
-        <p class="text-xl text-yellow-800/80 mb-8 max-w-lg mx-auto leading-relaxed">
-          Test your math speed and catch bananas before the timer runs out! Race against time in this exciting mathematical adventure. 🕒
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div class="bg-yellow-100/50 rounded-lg p-4">
-            <div class="text-2xl mb-2">⚡</div>
-            <div class="text-sm font-medium text-yellow-800">Lightning Fast</div>
-          </div>
-          <div class="bg-yellow-100/50 rounded-lg p-4">
-            <div class="text-2xl mb-2">🎯</div>
-            <div class="text-sm font-medium text-yellow-800">Multiple Levels</div>
-          </div>
-          <div class="bg-yellow-100/50 rounded-lg p-4">
-            <div class="text-2xl mb-2">🏆</div>
-            <div class="text-sm font-medium text-yellow-800">Leaderboards</div>
-          </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/login" class="enhanced-btn bg-yellow-500 hover:bg-yellow-600 text-white">
-            <span class="text-xl mr-2">🎮</span>
-            Start Playing
-          </Link>
-          <Link href="/register" class="enhanced-btn bg-white hover:bg-yellow-50 text-yellow-700 border-2 border-yellow-400">
-            <span class="text-xl mr-2">✨</span>
-            Create Account
-          </Link>
-        </div>
-      </div>
-    </transition>
+    <!-- Bottom Wave Decoration -->
+    <div class="absolute bottom-0 left-0 right-0 opacity-20">
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-24">
+        <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#F59E0B"/>
+      </svg>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
 </script>
-
-<style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.8s;
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-}
-
-.enhanced-btn {
-  @apply px-8 py-4 rounded-2xl shadow-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl;
-}
-</style>
