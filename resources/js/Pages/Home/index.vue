@@ -7,15 +7,24 @@
           <span class="text-3xl">🍌</span>
           <span class="text-xl font-bold text-gray-800">Banana Catcher</span>
         </div>
-        <Link 
-          v-if="$page.props.auth?.user"
-          :href="route('logout')" 
-          method="post" 
-          as="button"
-          class="btn-danger"
-        >
-          Logout
-        </Link>
+        <div class="flex items-center gap-3">
+          <Link 
+            v-if="$page.props.auth?.user?.role === 'admin'"
+            :href="route('admin.dashboard')"
+            class="btn-primary"
+          >
+            Admin Panel
+          </Link>
+          <Link 
+            v-if="$page.props.auth?.user"
+            :href="route('logout')" 
+            method="post" 
+            as="button"
+            class="btn-danger"
+          >
+            Logout
+          </Link>
+        </div>
       </div>
     </nav>
 

@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\GameScoreController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\Admin\GameScoreManagementController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -60,6 +63,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Admin routes - protected by admin middleware
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    
+    // User management
+    Route::resource('users', UserManagementController::class);
+    
+    // Game score management
+    Route::resource('scores', GameScoreManagementController::class)->except(['create', 'store']);
+    Route::post('/scores/delete-multiple', [GameScoreManagementController::class, 'destroyMultiple'])->name('scores.destroy-multiple');
 });
 
 require __DIR__.'/auth.php';

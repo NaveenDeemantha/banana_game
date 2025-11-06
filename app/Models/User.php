@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -67,5 +68,21 @@ class User extends Authenticatable
         }
         
         return $query->max('score') ?? 0;
+    }
+
+    /**
+     * Check if the user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if the user is a player.
+     */
+    public function isPlayer(): bool
+    {
+        return $this->role === 'player';
     }
 }

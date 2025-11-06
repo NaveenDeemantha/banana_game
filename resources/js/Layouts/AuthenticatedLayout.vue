@@ -39,6 +39,16 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Dashboard
                                 </NavLink>
+                                
+                                <!-- Admin Links -->
+                                <template v-if="$page.props.auth.user.role === 'admin'">
+                                    <NavLink
+                                        :href="route('admin.dashboard')"
+                                        :active="route().current('admin.*')"
+                                    >
+                                        Admin Panel
+                                    </NavLink>
+                                </template>
                             </div>
                         </div>
 
@@ -76,6 +86,28 @@ const showingNavigationDropdown = ref(false);
                                         >
                                             Profile
                                         </DropdownLink>
+                                        
+                                        <!-- Admin Dropdown Links -->
+                                        <template v-if="$page.props.auth.user.role === 'admin'">
+                                            <div class="border-t border-gray-100"></div>
+                                            <DropdownLink
+                                                :href="route('admin.dashboard')"
+                                            >
+                                                Admin Dashboard
+                                            </DropdownLink>
+                                            <DropdownLink
+                                                :href="route('admin.users.index')"
+                                            >
+                                                Manage Users
+                                            </DropdownLink>
+                                            <DropdownLink
+                                                :href="route('admin.scores.index')"
+                                            >
+                                                Manage Scores
+                                            </DropdownLink>
+                                            <div class="border-t border-gray-100"></div>
+                                        </template>
+                                        
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
@@ -146,6 +178,16 @@ const showingNavigationDropdown = ref(false);
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        
+                        <!-- Admin Mobile Links -->
+                        <template v-if="$page.props.auth.user.role === 'admin'">
+                            <ResponsiveNavLink
+                                :href="route('admin.dashboard')"
+                                :active="route().current('admin.*')"
+                            >
+                                Admin Panel
+                            </ResponsiveNavLink>
+                        </template>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -167,6 +209,17 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('profile.edit')">
                                 Profile
                             </ResponsiveNavLink>
+                            
+                            <!-- Admin Mobile Dropdown Links -->
+                            <template v-if="$page.props.auth.user.role === 'admin'">
+                                <ResponsiveNavLink :href="route('admin.users.index')">
+                                    Manage Users
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink :href="route('admin.scores.index')">
+                                    Manage Scores
+                                </ResponsiveNavLink>
+                            </template>
+                            
                             <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"
