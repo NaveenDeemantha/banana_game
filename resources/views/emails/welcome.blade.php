@@ -146,7 +146,7 @@
             </div>
             
             <div style="text-align: center; margin: 40px 0;">
-                <a href="{{ config('app.url') }}/login" class="cta-button">
+                <a href="{{ url(route('login')) }}" class="cta-button">
                     Start Playing Now! 🎮
                 </a>
             </div>

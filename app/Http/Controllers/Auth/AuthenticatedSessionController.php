@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Mail\LoginNotificationEmail;
+use App\Mail\LogoutNotificationEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,11 +61,25 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $user = Auth::user();
+        $logoutTime = now()->format('F j, Y, g:i a');
+        $ipAddress = $request->ip();
+        $userAgent = $request->userAgent();
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        // Send logout notification email
+        try {
+            Mail::to($user->email)->send(
+                new LogoutNotificationEmail($user, $logoutTime, $ipAddress, $userAgent)
+            );
+        } catch (\Exception $e) {
+            Log::error('Failed to send logout notification email: ' . $e->getMessage());
+        }
 
         return redirect('/');
     }
