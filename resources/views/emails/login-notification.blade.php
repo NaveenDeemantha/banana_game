@@ -166,7 +166,7 @@
                     If you <strong>did not</strong> perform this login, your account may be compromised. Please secure your account immediately.
                 </p>
                 <center>
-                    <a href="{{ config('app.url') }}/profile" class="secure-button">
+                    <a href="{{ url(route('password.request')) }}" class="secure-button">
                         🔒 Secure My Account
                     </a>
                 </center>
