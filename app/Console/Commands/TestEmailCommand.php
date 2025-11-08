@@ -4,9 +4,13 @@ namespace App\Console\Commands;
 
 use App\Mail\WelcomeEmail;
 use App\Mail\LoginNotificationEmail;
+use App\Mail\LogoutNotificationEmail;
+use App\Mail\PasswordChangedEmail;
+use App\Notifications\CustomResetPasswordNotification;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 
 class TestEmailCommand extends Command
 {
@@ -22,7 +26,7 @@ class TestEmailCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Test email sending (welcome or login). Usage: php artisan email:test welcome --email=test@example.com';
+    protected $description = 'Test email sending. Types: welcome, login, logout, password-changed, password-reset. Usage: php artisan email:test welcome --email=test@example.com';
 
     /**
      * Execute the console command.
@@ -53,6 +57,7 @@ class TestEmailCommand extends Command
             if ($type === 'welcome') {
                 Mail::to($user->email)->send(new WelcomeEmail($user));
                 $this->info('✅ Welcome email sent successfully!');
+                
             } elseif ($type === 'login') {
                 Mail::to($user->email)->send(
                     new LoginNotificationEmail(
@@ -63,8 +68,37 @@ class TestEmailCommand extends Command
                     )
                 );
                 $this->info('✅ Login notification email sent successfully!');
+                
+            } elseif ($type === 'logout') {
+                Mail::to($user->email)->send(
+                    new LogoutNotificationEmail(
+                        $user,
+                        now()->format('F j, Y, g:i a'),
+                        '127.0.0.1',
+                        'Test Browser - Mozilla/5.0'
+                    )
+                );
+                $this->info('✅ Logout notification email sent successfully!');
+                
+            } elseif ($type === 'password-changed') {
+                Mail::to($user->email)->send(
+                    new PasswordChangedEmail(
+                        $user,
+                        now()->format('F j, Y, g:i a'),
+                        '127.0.0.1',
+                        'Test Browser - Mozilla/5.0'
+                    )
+                );
+                $this->info('✅ Password changed email sent successfully!');
+                
+            } elseif ($type === 'password-reset') {
+                // Generate a password reset token
+                $token = Password::createToken($user);
+                $user->notify(new CustomResetPasswordNotification($token));
+                $this->info('✅ Password reset email sent successfully!');
+                
             } else {
-                $this->error('Invalid email type. Use "welcome" or "login"');
+                $this->error('Invalid email type. Use: welcome, login, logout, password-changed, or password-reset');
                 return 1;
             }
 
