@@ -1,59 +1,48 @@
 <template>
-    <section class="banana-card">
-        <header>
-            <h2 class="text-lg font-medium text-yellow-700">
-                <span class="banana-header-icon animate-float-y">🍌</span>
-                Profile Information
-            </h2>
-
-            <p class="mt-1 text-sm text-yellow-800/80">
-                Update your account's profile information and email address.
-            </p>
-        </header>
-
+    <section class="form-section">
         <form
             @submit.prevent="form.patch(route('profile.update'))"
-            class="mt-6 space-y-6"
+            class="form-container"
         >
-            <div>
-                <InputLabel for="name" value="Name" />
+            <div class="form-group">
+                <InputLabel for="name" value="Name" class="form-label" />
 
                 <TextInput
                     id="name"
                     type="text"
-                    class="mt-1 block w-full"
+                    class="form-input"
                     v-model="form.name"
                     required
                     autofocus
                     autocomplete="name"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="error-message" :message="form.errors.name" />
             </div>
 
-            <div>
-                <InputLabel for="email" value="Email" />
+            <div class="form-group">
+                <InputLabel for="email" value="Email" class="form-label" />
 
                 <TextInput
                     id="email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="form-input"
                     v-model="form.email"
                     required
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="error-message" :message="form.errors.email" />
             </div>
 
-            <div v-if="mustVerifyEmail && user.email_verified_at === null">
-                <p class="mt-2 text-sm text-gray-800">
+            <div v-if="mustVerifyEmail && user.email_verified_at === null" class="verify-section">
+                <p class="verify-text">
                     Your email address is unverified.
                     <Link
                         :href="route('verification.send')"
                         method="post"
                         as="button"
-                        class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        class="verify-link"
                     >
                         Click here to re-send the verification email.
                     </Link>
@@ -61,14 +50,14 @@
 
                 <div
                     v-show="status === 'verification-link-sent'"
-                    class="mt-2 text-sm font-medium text-green-600"
+                    class="verify-success"
                 >
                     A new verification link has been sent to your email address.
                 </div>
             </div>
 
-            <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+            <div class="form-actions">
+                <PrimaryButton :disabled="form.processing" class="save-btn">Save</PrimaryButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
@@ -78,9 +67,9 @@
                 >
                     <p
                         v-if="form.recentlySuccessful"
-                        class="text-sm text-gray-600"
+                        class="success-text"
                     >
-                        Saved.
+                        ✓ Saved successfully!
                     </p>
                 </Transition>
             </div>
@@ -111,3 +100,107 @@ const form = useForm({
     email: user.email,
 });
 </script>
+
+<style scoped>
+.form-section {
+  padding: 1rem;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  color: #92400e;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.625rem;
+  border: 2px solid #fed7aa;
+  border-radius: 0.5rem;
+  background-color: #FFFFFF;
+  transition: all 0.3s;
+}
+
+.form-input:focus {
+  border-color: #fbbf24;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+.verify-section {
+  background-color: #fef3c7;
+  border: 2px solid #fde68a;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+}
+
+.verify-text {
+  color: #92400e;
+  font-size: 0.875rem;
+}
+
+.verify-link {
+  color: #ea580c;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.verify-link:hover {
+  color: #dc2626;
+}
+
+.verify-success {
+  margin-top: 0.5rem;
+  color: #16a34a;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.save-btn {
+  padding: 0.625rem 1.5rem;
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  color: #FFFFFF;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+  transform: scale(1.05);
+}
+
+.save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.success-text {
+  color: #16a34a;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+</style>
