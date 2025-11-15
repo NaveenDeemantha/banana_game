@@ -131,52 +131,51 @@
             <span class="emoji">🔑</span>
             <h1>Password Reset Request</h1>
         </div>
-        
+
         <div class="content">
             <p class="greeting">Hello {{ $user->name }},</p>
-            
+
             <p class="message">
-                You recently requested to reset your password for your Banana Catcher account. 
-                Click the button below to reset it. This password reset link will expire in 
+                You requested to reset your password for your Banana Catcher account.
+                Click the button below to create a new password. This link will expire in
                 <strong>{{ $expiresIn }} minutes</strong>.
             </p>
-            
+
             <div class="button-container">
-                <a href="{{ $resetUrl }}" class="reset-button">Reset Your Password</a>
+                <a href="{{ $resetUrl }}" class="reset-button">Reset Password</a>
             </div>
-            
+
             <div class="warning-box">
                 <p>
-                    ⚠️ <strong>Important:</strong> If you didn't request a password reset, 
-                    please ignore this email or contact support if you have concerns about 
-                    your account security.
+                    <strong>Important:</strong> If you did not request this password reset,
+                    please ignore this email or contact support if you have security concerns.
                 </p>
             </div>
-            
+
             <div class="info-box">
-                <p><strong>Security Tips:</strong></p>
-                <p>✅ Never share your password with anyone</p>
-                <p>✅ Use a unique password for Banana Catcher</p>
-                <p>✅ Make sure it's at least 8 characters long</p>
-                <p>✅ Include numbers, letters, and special characters</p>
+                <p><strong>Password Requirements:</strong></p>
+                <p>• At least 8 characters long</p>
+                <p>• Include uppercase and lowercase letters</p>
+                <p>• Include numbers and special characters</p>
+                <p>• Use a unique password for this account</p>
             </div>
-            
+
             <p class="link-text">
                 If the button doesn't work, copy and paste this link into your browser:<br>
                 {{ $resetUrl }}
             </p>
         </div>
-        
+
         <div class="footer">
-            <p><strong>🍌 Banana Catcher</strong></p>
-            <p>Catch bananas, beat your high score!</p>
+            <p><strong>Banana Catcher</strong></p>
+            <p>Account Security Team</p>
             <p style="margin-top: 15px;">
-                <a href="#">Privacy Policy</a> | 
-                <a href="#">Terms of Service</a> | 
-                <a href="#">Contact Support</a>
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="#">Support</a>
             </p>
             <p style="margin-top: 15px; font-size: 12px; color: #9ca3af;">
-                This is an automated email. Please do not reply to this message.
+                This is an automated security email.
             </p>
         </div>
     </div>

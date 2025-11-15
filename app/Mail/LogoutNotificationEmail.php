@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class LogoutNotificationEmail extends Mailable
@@ -34,7 +35,10 @@ class LogoutNotificationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'You\'ve Been Logged Out - Banana Catcher 👋',
+            subject: 'Account Logout Notification',
+            from: new Address(config('mail.from.address'), config('mail.from.name')),
+            replyTo: [new Address('security@bananacatcher.com', 'Banana Catcher Security')],
+            tags: ['security', 'logout-notification'],
         );
     }
 

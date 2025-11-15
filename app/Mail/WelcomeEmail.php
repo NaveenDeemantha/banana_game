@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class WelcomeEmail extends Mailable
@@ -30,7 +31,10 @@ class WelcomeEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome to Banana Catcher! 🍌',
+            subject: 'Welcome to Banana Catcher Educational Platform',
+            from: new Address(config('mail.from.address'), config('mail.from.name')),
+            replyTo: [new Address('support@bananacatcher.com', 'Banana Catcher Support')],
+            tags: ['welcome', 'account-setup'],
         );
     }
 
@@ -41,6 +45,7 @@ class WelcomeEmail extends Mailable
     {
         return new Content(
             view: 'emails.welcome',
+            text: 'emails.welcome-text',
         );
     }
 
