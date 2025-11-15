@@ -120,6 +120,14 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
+import { useBackgroundMusic } from '@/composables/useBackgroundMusic';
+
+const { initAudio } = useBackgroundMusic();
+
+onMounted(() => {
+  initAudio();
+});
 </script>
 
 <style scoped>

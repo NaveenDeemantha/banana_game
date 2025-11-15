@@ -1,6 +1,9 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+import { useBackgroundMusic } from '@/composables/useBackgroundMusic';
+
+const { initAudio } = useBackgroundMusic();
 
 // Receive props from the server
 const props = defineProps({
@@ -21,6 +24,7 @@ const props = defineProps({
 const showAnimation = ref(false);
 
 onMounted(() => {
+  initAudio();
   setTimeout(() => {
     showAnimation.value = true;
   }, 300);

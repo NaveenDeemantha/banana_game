@@ -126,6 +126,9 @@
 import { Link, usePage } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { useBackgroundMusic } from '@/composables/useBackgroundMusic';
+
+const { initAudio } = useBackgroundMusic();
 
 const page = usePage();
 const players = ref([]);
@@ -200,6 +203,7 @@ async function fetchUserStats() {
 }
 
 onMounted(() => {
+  initAudio();
   fetchLeaderboard();
   fetchUserStats();
 });

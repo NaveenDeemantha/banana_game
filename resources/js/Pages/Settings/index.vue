@@ -59,14 +59,46 @@
             </div>
 
             <div class="preferences-grid">
-              <!-- Sound Setting -->
-              <div class="setting-card">
+              <!-- Background Music Setting -->
+              <div class="setting-card music-card">
                 <div class="setting-content">
                   <div class="setting-info">
                     <span class="setting-icon">🎵</span>
                     <div>
+                      <div class="setting-name">Background Music</div>
+                      <div class="setting-desc">Play relaxing background music</div>
+                    </div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" v-model="settings.backgroundMusic" class="toggle-input">
+                    <div class="toggle-slider" :class="settings.backgroundMusic ? 'toggle-on' : 'toggle-off'"></div>
+                  </label>
+                </div>
+                <!-- Volume Slider -->
+                <div v-if="settings.backgroundMusic" class="volume-control">
+                  <label class="volume-label">
+                    <span class="volume-icon">🔊</span>
+                    <span class="volume-text">Volume: {{ Math.round(settings.musicVolume) }}%</span>
+                  </label>
+                  <input
+                    type="range"
+                    v-model="settings.musicVolume"
+                    min="0"
+                    max="100"
+                    step="1"
+                    class="volume-slider"
+                  >
+                </div>
+              </div>
+
+              <!-- Sound Effects Setting -->
+              <div class="setting-card">
+                <div class="setting-content">
+                  <div class="setting-info">
+                    <span class="setting-icon">🔔</span>
+                    <div>
                       <div class="setting-name">Sound Effects</div>
-                      <div class="setting-desc">Enable audio feedback and music</div>
+                      <div class="setting-desc">Enable game sound effects</div>
                     </div>
                   </div>
                   <label class="toggle-switch">
@@ -97,7 +129,7 @@
               <div class="setting-card">
                 <div class="setting-content">
                   <div class="setting-info">
-                    <span class="setting-icon">🔔</span>
+                    <span class="setting-icon">📢</span>
                     <div>
                       <div class="setting-name">Notifications</div>
                       <div class="setting-desc">Get achievement alerts</div>
@@ -237,7 +269,10 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
+import { useBackgroundMusic } from '@/composables/useBackgroundMusic';
+
+const { isMusicEnabled, volume, setMusicEnabled, setVolume, initAudio } = useBackgroundMusic();
 
 const settings = ref({
   sound: true,
@@ -246,7 +281,24 @@ const settings = ref({
   difficulty: 'medium',
   autoSubmit: false,
   language: 'en',
-  theme: 'banana'
+  theme: 'banana',
+  backgroundMusic: isMusicEnabled.value,
+  musicVolume: volume.value * 100 // Convert to 0-100 scale
+});
+
+// Watch for music setting changes
+watch(() => settings.value.backgroundMusic, (newValue) => {
+  setMusicEnabled(newValue);
+});
+
+watch(() => settings.value.musicVolume, (newValue) => {
+  setVolume(newValue / 100); // Convert back to 0-1 scale
+});
+
+onMounted(() => {
+  initAudio();
+  settings.value.backgroundMusic = isMusicEnabled.value;
+  settings.value.musicVolume = volume.value * 100;
 });
 
 const difficulties = [
@@ -522,6 +574,10 @@ const getSaveButtonText = computed(() => {
   border-color: #fbbf24;
 }
 
+.music-card {
+  grid-column: 1 / -1;
+}
+
 .setting-content {
   display: flex;
   align-items: center;
@@ -595,6 +651,76 @@ const getSaveButtonText = computed(() => {
 .toggle-on:before {
   transform: translateX(1.5rem);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 8px rgba(234, 179, 8, 0.4);
+}
+
+/* Volume Control */
+.volume-control {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #fed7aa;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.volume-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #92400e;
+  font-weight: 500;
+}
+
+.volume-icon {
+  font-size: 1.25rem;
+}
+
+.volume-text {
+  font-weight: 600;
+}
+
+.volume-slider {
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background: linear-gradient(to right, #fed7aa 0%, #fbbf24 100%);
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.6);
+  transition: all 0.3s;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.8);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.6);
+  transition: all 0.3s;
+}
+
+.volume-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.8);
 }
 
 /* Difficulty section */

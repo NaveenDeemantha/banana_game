@@ -124,6 +124,9 @@
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
 import axios from 'axios';
+import { useBackgroundMusic } from '@/composables/useBackgroundMusic';
+
+const { initAudio } = useBackgroundMusic();
 
 const page = usePage();
 const levelParam = new URLSearchParams(window.location.search).get('level') || 'easy';
@@ -259,6 +262,7 @@ async function endGame() {
 }
 
 onMounted(async () => {
+  initAudio();
   fetchQuestion();
   gameStartTime.value = Date.now();
   // Focus input when page loads
