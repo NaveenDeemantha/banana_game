@@ -37,7 +37,7 @@
       <div class="mb-8">
         <div class="text-7xl mb-6 animate-pulse-subtle">🍌</div>
         <h1 class="heading-2 mb-3 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-          Welcome Back!
+          Welcome Back, {{ $page.props.auth?.user?.name?.split(' ')[0] || 'Guest' }}!
         </h1>
         <p class="text-lg text-gray-700 max-w-md mx-auto">
           Ready to test your math skills?

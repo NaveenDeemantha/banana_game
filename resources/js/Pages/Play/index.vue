@@ -1,25 +1,25 @@
 <template>
-  <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center relative overflow-hidden">
+  <div class="min-h-screen bg-animated-yellow flex flex-col items-center justify-center relative overflow-hidden py-6">
     <!-- User Menu in Top Right -->
     <div class="absolute top-6 right-6 z-10">
-      <Link 
+      <Link
         v-if="$page.props.auth?.user"
-        :href="route('logout')" 
-        method="post" 
+        :href="route('logout')"
+        method="post"
         as="button"
         class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
       >
         🚪 Logout
       </Link>
       <div v-else class="flex items-center gap-3">
-        <Link 
-          href="/login" 
+        <!-- <Link
+          href="/login"
           class="px-4 py-2 bg-white text-yellow-700 border-2 border-yellow-400 rounded-lg shadow-lg hover:bg-yellow-50 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
         >
           🔑 Login
-        </Link>
-        <Link 
-          href="/register" 
+        </Link> -->
+        <Link
+          href="/register"
           class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
         >
           ✨ Register
@@ -30,14 +30,14 @@
     <div class="absolute left-6 top-6 banana-header-icon animate-float-y">🍌</div>
     <div class="absolute right-6 bottom-6 banana-header-icon animate-float-y" style="animation-delay: 1s;">🍌</div>
 
-    <div class="banana-card w-full max-w-lg mx-4">
-      <div class="flex items-center justify-between mb-6">
+    <div class="banana-card w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-3">
         <div>
-          <h3 class="text-2xl font-bold text-yellow-700 flex items-center gap-2">
+          <h3 class="text-xl font-bold text-yellow-700 flex items-center gap-2">
             <span class="animate-float-y">🎯</span>
             Solve the Question!
           </h3>
-          <div class="text-sm text-yellow-600 mt-1">Level: {{ levelNames[levelParam] || levelParam }}</div>
+          <div class="text-sm text-yellow-600">Level: {{ levelNames[levelParam] || levelParam }}</div>
         </div>
         <div class="text-right">
           <div class="text-3xl font-bold text-red-500">{{ remaining }}</div>
@@ -46,28 +46,28 @@
       </div>
 
       <!-- Score Display -->
-      <div class="mb-4 p-3 bg-white/80 rounded-xl flex justify-between items-center">
+      <div class="mb-3 p-2 bg-white/80 rounded-lg flex justify-between items-center">
         <div class="text-center flex-1">
           <div class="text-xs text-gray-600">Score</div>
-          <div class="text-xl font-bold text-yellow-700">{{ currentScore }}</div>
+          <div class="text-lg font-bold text-yellow-700">{{ currentScore }}</div>
         </div>
         <div class="text-center flex-1">
           <div class="text-xs text-gray-600">Correct</div>
-          <div class="text-xl font-bold text-green-600">{{ correctAnswers }}</div>
+          <div class="text-lg font-bold text-green-600">{{ correctAnswers }}</div>
         </div>
         <div class="text-center flex-1">
           <div class="text-xs text-gray-600">Total</div>
-          <div class="text-xl font-bold text-blue-600">{{ totalQuestions }}</div>
+          <div class="text-lg font-bold text-blue-600">{{ totalQuestions }}</div>
         </div>
       </div>
 
-      <div v-if="imageSrc" class="mb-6 bg-white rounded-xl p-4 shadow-inner">
-        <img :src="imageSrc" alt="question" class="mx-auto max-h-48 rounded-lg" />
+      <div v-if="imageSrc" class="mb-3 bg-white rounded-lg p-2 shadow-inner">
+        <img :src="imageSrc" alt="question" class="mx-auto max-h-40 rounded-lg" />
       </div>
 
-      <div v-else class="mb-6 bg-white rounded-xl p-8 shadow-inner">
+      <div v-else class="mb-3 bg-white rounded-lg p-4 shadow-inner">
         <div class="text-yellow-500 text-center">
-          <div class="animate-spin text-4xl mb-2">🍌</div>
+          <div class="animate-spin text-3xl mb-1">🍌</div>
           <div class="text-gray-500">Loading question…</div>
         </div>
       </div>
@@ -78,35 +78,35 @@
         type="number"
         placeholder="Enter your answer"
         @keyup.enter="handleSubmit(false)"
-        class="w-full p-4 border-2 border-yellow-300 rounded-xl text-center focus:outline-none focus:border-yellow-500 mb-6 text-lg font-semibold bg-white/90"
+        class="w-full p-3 border-2 border-yellow-300 rounded-lg text-center focus:outline-none focus:border-yellow-500 mb-3 text-lg font-semibold bg-white/90"
       />
 
-      <div class="flex gap-4">
-        <button 
-          @click.prevent="handleSubmit(false)" 
-          :disabled="processing" 
-          class="flex-1 px-6 py-4 bg-yellow-500 text-white rounded-xl shadow-lg hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105 font-semibold text-lg disabled:opacity-50"
+      <div class="flex gap-3">
+        <button
+          @click.prevent="handleSubmit(false)"
+          :disabled="processing"
+          class="flex-1 px-4 py-3 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105 font-semibold disabled:opacity-50"
         >
           Submit Answer
         </button>
-        <button 
-          @click.prevent="skipQuestion" 
-          :disabled="processing" 
-          class="px-6 py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 font-medium disabled:opacity-50"
+        <button
+          @click.prevent="skipQuestion"
+          :disabled="processing"
+          class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 font-medium disabled:opacity-50"
         >
           Skip
         </button>
       </div>
 
-      <div v-if="feedback" class="mt-6 p-4 rounded-xl text-center font-medium text-lg" :class="feedback.ok ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
+      <div v-if="feedback" class="mt-3 p-3 rounded-lg text-center font-medium" :class="feedback.ok ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
         {{ feedback.message }}
       </div>
 
-      <div class="mt-6 flex gap-4 justify-center text-center">
-        <Link href="/difficulty" class="text-yellow-700 hover:text-yellow-800 font-medium">
+      <div class="mt-4 flex gap-4 justify-center text-center">
+        <Link href="/difficulty" class="text-yellow-700 hover:text-yellow-800 font-medium text-sm">
           ← Back to Difficulty
         </Link>
-        <button @click="endGame" class="text-red-600 hover:text-red-700 font-medium">
+        <button @click="endGame" class="text-red-600 hover:text-red-700 font-medium text-sm">
           End Game
         </button>
       </div>
@@ -181,10 +181,10 @@ function clearTimer() {
 function handleSubmit(timedOut = false) {
   clearTimer();
   totalQuestions.value += 1;
-  
+
   const user = Number(answer.value);
   const correct = !timedOut && solution.value !== null && user === Number(solution.value);
-  
+
   if (correct) {
     correctAnswers.value += 1;
     // Award points based on difficulty and time remaining
@@ -197,7 +197,7 @@ function handleSubmit(timedOut = false) {
   } else {
     feedback.value = { ok: false, message: `Wrong — answer was ${solution.value}` };
   }
-  
+
   setTimeout(() => {
     answer.value = '';
     fetchQuestion();
@@ -216,12 +216,12 @@ function skipQuestion() {
 
 async function endGame() {
   clearTimer();
-  
+
   // Save score to database if user is authenticated
   if (page.props.auth?.user) {
     try {
       const timeTaken = Math.floor((Date.now() - gameStartTime.value) / 1000);
-      
+
       await axios.post('/api/scores', {
         score: currentScore.value,
         correct_answers: correctAnswers.value,
@@ -229,13 +229,13 @@ async function endGame() {
         difficulty: levelParam,
         time_taken: timeTaken,
       });
-      
+
       console.log('Score saved successfully!');
     } catch (error) {
       console.error('Failed to save score:', error);
     }
   }
-  
+
   // Redirect to result page with stats
   router.visit('/result', {
     method: 'get',

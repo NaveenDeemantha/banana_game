@@ -12,7 +12,7 @@
         <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍌%3C/text%3E%3C/svg%3E" type="image/svg+xml">
         <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍌%3C/text%3E%3C/svg%3E">
         <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23FCD34D'/%3E%3Ctext y='140' x='50' font-size='120'%3E🍌%3C/text%3E%3C/svg%3E">
-        
+
         <!-- Meta tags for better icon support -->
         <meta name="msapplication-TileColor" content="#FCD34D">
         <meta name="theme-color" content="#FCD34D">
