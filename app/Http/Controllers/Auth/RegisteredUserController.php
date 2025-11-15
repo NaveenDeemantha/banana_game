@@ -46,6 +46,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('home', absolute: false));
+        // Redirect to email verification notice
+        return redirect()->route('verification.notice');
     }
 }
