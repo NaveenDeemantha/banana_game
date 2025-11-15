@@ -131,7 +131,7 @@ const { initAudio } = useBackgroundMusic();
 const page = usePage();
 const levelParam = new URLSearchParams(window.location.search).get('level') || 'easy';
 const levelNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
-const levelTimes = { easy: 12, medium: 8, hard: 5 };
+const levelTimes = { easy: 30, medium: 20, hard: 15 };
 
 const levelRanges = {
   easy: { min: 0, max: 3 },
