@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Admin\GameScoreManagementController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -42,8 +44,38 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Play/index');
     })->name('play');
 
-    Route::get('/result', function () {
-        return Inertia::render('Result/index');
+    Route::get('/result', function (Request $request) {
+        $score = $request->query('score', 0);
+        $correct = $request->query('correct', 0);
+        $total = $request->query('total', 0);
+        $difficulty = $request->query('difficulty', 'medium');
+
+        // Calculate accuracy
+        $accuracy = $total > 0 ? round(($correct / $total) * 100) : 0;
+
+        // Calculate time bonus (placeholder logic - adjust as needed)
+        $timeBonus = $correct * 2;
+
+        // Check if it's a new record for the user
+        $newRecord = false;
+        if (Auth::check()) {
+            $bestScore = Auth::user()->gameScores()
+                ->where('difficulty', $difficulty)
+                ->max('score');
+            $newRecord = $score > ($bestScore ?? 0);
+        }
+
+        return Inertia::render('Result/index', [
+            'gameResults' => [
+                'score' => (int) $score,
+                'totalQuestions' => (int) $total,
+                'correctAnswers' => (int) $correct,
+                'difficulty' => ucfirst($difficulty),
+                'timeBonus' => $timeBonus,
+                'accuracy' => $accuracy,
+                'newRecord' => $newRecord,
+            ]
+        ]);
     })->name('result');
 
     Route::get('/settings', function () {

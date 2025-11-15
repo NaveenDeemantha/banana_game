@@ -34,75 +34,64 @@ const updatePassword = () => {
 </script>
 
 <template>
-    <section class="banana-card">
-        <header>
-            <h2 class="text-lg font-medium text-yellow-700">
-                <span class="banana-header-icon animate-float-y">🍌</span>
-                Update Password
-            </h2>
-
-            <p class="mt-1 text-sm text-yellow-800/80">
-                Ensure your account is using a long, random password to stay
-                secure.
-            </p>
-        </header>
-
-        <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
-            <div>
-                <InputLabel for="current_password" value="Current Password" />
+    <section class="form-section">
+        <form @submit.prevent="updatePassword" class="form-container">
+            <div class="form-group">
+                <InputLabel for="current_password" value="Current Password" class="form-label" />
 
                 <TextInput
                     id="current_password"
                     ref="currentPasswordInput"
                     v-model="form.current_password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="form-input"
                     autocomplete="current-password"
                 />
 
                 <InputError
                     :message="form.errors.current_password"
-                    class="mt-2"
+                    class="error-message"
                 />
             </div>
 
-            <div>
-                <InputLabel for="password" value="New Password" />
+            <div class="form-group">
+                <InputLabel for="password" value="New Password" class="form-label" />
 
                 <TextInput
                     id="password"
                     ref="passwordInput"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="form-input"
                     autocomplete="new-password"
                 />
 
-                <InputError :message="form.errors.password" class="mt-2" />
+                <InputError :message="form.errors.password" class="error-message" />
             </div>
 
-            <div>
+            <div class="form-group">
                 <InputLabel
                     for="password_confirmation"
                     value="Confirm Password"
+                    class="form-label"
                 />
 
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="form-input"
                     autocomplete="new-password"
                 />
 
                 <InputError
                     :message="form.errors.password_confirmation"
-                    class="mt-2"
+                    class="error-message"
                 />
             </div>
 
-            <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+            <div class="form-actions">
+                <PrimaryButton :disabled="form.processing" class="save-btn">Save</PrimaryButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
@@ -112,12 +101,87 @@ const updatePassword = () => {
                 >
                     <p
                         v-if="form.recentlySuccessful"
-                        class="text-sm text-gray-600"
+                        class="success-text"
                     >
-                        Saved.
+                        ✓ Saved successfully!
                     </p>
                 </Transition>
             </div>
         </form>
     </section>
 </template>
+
+<style scoped>
+.form-section {
+  padding: 1rem;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  color: #92400e;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.625rem;
+  border: 2px solid #fed7aa;
+  border-radius: 0.5rem;
+  background-color: #FFFFFF;
+  transition: all 0.3s;
+}
+
+.form-input:focus {
+  border-color: #fbbf24;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.save-btn {
+  padding: 0.625rem 1.5rem;
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  color: #FFFFFF;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+  transform: scale(1.05);
+}
+
+.save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.success-text {
+  color: #16a34a;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+</style>

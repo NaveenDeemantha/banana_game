@@ -1,27 +1,27 @@
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-yellow-300 via-yellow-200 to-yellow-300 relative overflow-hidden">
+  <div class="settings-container">
     <!-- User Menu in Top Right -->
-    <div class="absolute top-6 right-6 z-10">
-      <Link 
+    <div class="user-menu">
+      <Link
         v-if="$page.props.auth?.user"
-        :href="route('logout')" 
-        method="post" 
+        :href="route('logout')"
+        method="post"
         as="button"
-        class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
+        class="logout-btn"
       >
         🚪 Logout
       </Link>
-      <div v-else class="flex items-center gap-3">
-        <Link 
-          href="/login" 
-          class="px-4 py-2 bg-white text-yellow-700 border-2 border-yellow-400 rounded-lg shadow-lg hover:bg-yellow-50 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
+      <div v-else class="auth-links">
+        <Link
+          href="/login"
+          class="login-btn"
         >
           🔑 Login
         </Link>
-        <Link 
-          href="/register" 
-          class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105 font-medium text-sm"
+        <Link
+          href="/register"
+          class="register-btn"
         >
           ✨ Register
         </Link>
@@ -29,112 +29,132 @@
     </div>
 
     <!-- Enhanced floating decorations -->
-    <div class="absolute left-6 top-6 text-6xl animate-bounce" style="animation-duration: 3s;">🍌</div>
-    <div class="absolute right-6 bottom-6 text-6xl animate-bounce" style="animation-duration: 3s; animation-delay: 1s;">🍌</div>
-    <div class="absolute top-1/4 right-12 text-6xl animate-bounce" style="animation-duration: 3s; animation-delay: 2s;">⚙️</div>
-    <div class="absolute bottom-1/4 left-12 text-6xl animate-bounce" style="animation-duration: 3s; animation-delay: 0.5s;">🎮</div>
+    <div class="decoration-left">🍌</div>
+    <div class="decoration-right">🍌</div>
+    <div class="decoration-top">⚙️</div>
+    <div class="decoration-bottom">🎮</div>
 
-    <div class="flex flex-col items-center justify-center min-h-screen py-12">
+    <div class="content-wrapper">
       <!-- Header Section -->
-      <div class="text-center mb-8">
-        <div class="text-8xl mb-6 animate-bounce" style="animation-duration: 2s;">⚙️</div>
-        <h1 class="text-4xl font-bold text-yellow-800 mb-4">Game Settings</h1>
-        <p class="text-xl text-yellow-700 max-w-md mx-auto">
+      <div class="header-section">
+        <div class="settings-icon">⚙️</div>
+        <h1 class="settings-title">Game Settings</h1>
+        <p class="settings-subtitle">
           Customize your banana catching experience to perfection
         </p>
       </div>
 
       <!-- Settings Container -->
-      <div class="w-full max-w-4xl mx-4">
-        <div class="bg-white rounded-3xl shadow-2xl p-8 space-y-8">
-          
+      <div class="settings-wrapper">
+        <div class="settings-card">
+
           <!-- Game Preferences Section -->
-          <div class="space-y-4">
-            <div class="border-b-2 border-yellow-200 pb-3">
-              <h3 class="text-xl font-bold text-yellow-700 flex items-center gap-2">
+          <div class="preferences-section">
+            <div class="section-header">
+              <h3 class="section-title">
                 <span>🎮</span>
                 Game Preferences
               </h3>
-              <p class="text-yellow-600 text-sm">Configure your gameplay experience</p>
+              <p class="section-description">Configure your gameplay experience</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <!-- Sound Setting -->
-              <div class="bg-gradient-to-br from-yellow-50 to-white rounded-xl p-4 border-2 border-yellow-200 hover:border-yellow-400 transition-all">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span class="text-3xl">🎵</span>
+            <div class="preferences-grid">
+              <!-- Background Music Setting -->
+              <div class="setting-card music-card">
+                <div class="setting-content">
+                  <div class="setting-info">
+                    <span class="setting-icon">🎵</span>
                     <div>
-                      <div class="font-semibold text-gray-800">Sound Effects</div>
-                      <div class="text-sm text-gray-600">Enable audio feedback and music</div>
+                      <div class="setting-name">Background Music</div>
+                      <div class="setting-desc">Play relaxing background music</div>
                     </div>
                   </div>
-                  <label class="relative inline-block w-14 h-8 cursor-pointer">
-                    <input type="checkbox" v-model="settings.sound" class="sr-only peer">
-                    <div class="w-14 h-8 bg-gray-300 peer-checked:bg-yellow-500 rounded-full transition-all duration-300 relative">
-                      <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300" 
-                           :class="settings.sound ? 'translate-x-6' : 'translate-x-0'"></div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" v-model="settings.backgroundMusic" class="toggle-input">
+                    <div class="toggle-slider" :class="settings.backgroundMusic ? 'toggle-on' : 'toggle-off'"></div>
+                  </label>
+                </div>
+                <!-- Volume Slider -->
+                <div v-if="settings.backgroundMusic" class="volume-control">
+                  <label class="volume-label">
+                    <span class="volume-icon">🔊</span>
+                    <span class="volume-text">Volume: {{ Math.round(settings.musicVolume) }}%</span>
+                  </label>
+                  <input
+                    type="range"
+                    v-model="settings.musicVolume"
+                    min="0"
+                    max="100"
+                    step="1"
+                    class="volume-slider"
+                  >
+                </div>
+              </div>
+
+              <!-- Sound Effects Setting -->
+              <div class="setting-card">
+                <div class="setting-content">
+                  <div class="setting-info">
+                    <span class="setting-icon">🔔</span>
+                    <div>
+                      <div class="setting-name">Sound Effects</div>
+                      <div class="setting-desc">Enable game sound effects</div>
                     </div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" v-model="settings.sound" class="toggle-input">
+                    <div class="toggle-slider" :class="settings.sound ? 'toggle-on' : 'toggle-off'"></div>
                   </label>
                 </div>
               </div>
 
               <!-- Auto Submit Setting -->
-              <div class="bg-gradient-to-br from-yellow-50 to-white rounded-xl p-4 border-2 border-yellow-200 hover:border-yellow-400 transition-all">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span class="text-3xl">⚡</span>
+              <div class="setting-card">
+                <div class="setting-content">
+                  <div class="setting-info">
+                    <span class="setting-icon">⚡</span>
                     <div>
-                      <div class="font-semibold text-gray-800">Auto Submit</div>
-                      <div class="text-sm text-gray-600">Submit answers automatically</div>
+                      <div class="setting-name">Auto Submit</div>
+                      <div class="setting-desc">Submit answers automatically</div>
                     </div>
                   </div>
-                  <label class="relative inline-block w-14 h-8 cursor-pointer">
-                    <input type="checkbox" v-model="settings.autoSubmit" class="sr-only peer">
-                    <div class="w-14 h-8 bg-gray-300 peer-checked:bg-yellow-500 rounded-full transition-all duration-300 relative">
-                      <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300" 
-                           :class="settings.autoSubmit ? 'translate-x-6' : 'translate-x-0'"></div>
-                    </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" v-model="settings.autoSubmit" class="toggle-input">
+                    <div class="toggle-slider" :class="settings.autoSubmit ? 'toggle-on' : 'toggle-off'"></div>
                   </label>
                 </div>
               </div>
 
               <!-- Notifications Setting -->
-              <div class="bg-gradient-to-br from-yellow-50 to-white rounded-xl p-4 border-2 border-yellow-200 hover:border-yellow-400 transition-all">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span class="text-3xl">🔔</span>
+              <div class="setting-card">
+                <div class="setting-content">
+                  <div class="setting-info">
+                    <span class="setting-icon">📢</span>
                     <div>
-                      <div class="font-semibold text-gray-800">Notifications</div>
-                      <div class="text-sm text-gray-600">Get achievement alerts</div>
+                      <div class="setting-name">Notifications</div>
+                      <div class="setting-desc">Get achievement alerts</div>
                     </div>
                   </div>
-                  <label class="relative inline-block w-14 h-8 cursor-pointer">
-                    <input type="checkbox" v-model="settings.notifications" class="sr-only peer">
-                    <div class="w-14 h-8 bg-gray-300 peer-checked:bg-yellow-500 rounded-full transition-all duration-300 relative">
-                      <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300" 
-                           :class="settings.notifications ? 'translate-x-6' : 'translate-x-0'"></div>
-                    </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" v-model="settings.notifications" class="toggle-input">
+                    <div class="toggle-slider" :class="settings.notifications ? 'toggle-on' : 'toggle-off'"></div>
                   </label>
                 </div>
               </div>
 
               <!-- Dark Mode Setting -->
-              <div class="bg-gradient-to-br from-yellow-50 to-white rounded-xl p-4 border-2 border-yellow-200 hover:border-yellow-400 transition-all">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span class="text-3xl">🌙</span>
+              <div class="setting-card">
+                <div class="setting-content">
+                  <div class="setting-info">
+                    <span class="setting-icon">🌙</span>
                     <div>
-                      <div class="font-semibold text-gray-800">Dark Mode</div>
-                      <div class="text-sm text-gray-600">Switch to dark theme</div>
+                      <div class="setting-name">Dark Mode</div>
+                      <div class="setting-desc">Switch to dark theme</div>
                     </div>
                   </div>
-                  <label class="relative inline-block w-14 h-8 cursor-pointer">
-                    <input type="checkbox" v-model="settings.darkMode" class="sr-only peer">
-                    <div class="w-14 h-8 bg-gray-300 peer-checked:bg-yellow-500 rounded-full transition-all duration-300 relative">
-                      <div class="absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transform transition-transform duration-300" 
-                           :class="settings.darkMode ? 'translate-x-6' : 'translate-x-0'"></div>
-                    </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" v-model="settings.darkMode" class="toggle-input">
+                    <div class="toggle-slider" :class="settings.darkMode ? 'toggle-on' : 'toggle-off'"></div>
                   </label>
                 </div>
               </div>
@@ -142,60 +162,59 @@
           </div>
 
           <!-- Difficulty Preference -->
-          <div class="space-y-4">
-            <div class="border-b-2 border-yellow-200 pb-3">
-              <h3 class="text-xl font-bold text-yellow-700 flex items-center gap-2">
+          <div class="difficulty-section">
+            <div class="section-header">
+              <h3 class="section-title">
                 <span>🎯</span>
                 Default Difficulty
               </h3>
-              <p class="text-yellow-600 text-sm">Choose your preferred game difficulty</p>
+              <p class="section-description">Choose your preferred game difficulty</p>
             </div>
 
-            <div class="grid grid-cols-3 gap-4">
+            <div class="difficulty-grid">
               <button
                 v-for="diff in difficulties"
                 :key="diff.value"
                 @click="settings.difficulty = diff.value"
                 :class="[
-                  'rounded-xl p-6 text-center transition-all duration-300 transform hover:scale-105',
-                  diff.color,
-                  settings.difficulty === diff.value ? 'ring-4 ring-yellow-400 shadow-xl scale-105' : 'opacity-70 hover:opacity-100'
+                  'difficulty-btn',
+                  getDifficultyClass(diff.value)
                 ]"
               >
-                <div class="text-3xl mb-2">{{ diff.icon }}</div>
-                <div class="font-semibold text-white">{{ diff.label.split(' ')[0] }}</div>
-                <div class="text-white/80 text-xs">{{ diff.label.split(' ')[1] }}</div>
+                <div class="difficulty-icon">{{ diff.icon }}</div>
+                <div class="difficulty-name">{{ diff.label.split(' ')[0] }}</div>
+                <div class="difficulty-time">{{ diff.label.split(' ')[1] }}</div>
               </button>
             </div>
           </div>
 
           <!-- Theme Selection -->
-          <div class="space-y-4">
-            <div class="border-b-2 border-yellow-200 pb-3">
-              <h3 class="text-xl font-bold text-yellow-700 flex items-center gap-2">
+          <div class="theme-section">
+            <div class="section-header">
+              <h3 class="section-title">
                 <span>🎨</span>
                 Theme & Appearance
               </h3>
-              <p class="text-yellow-600 text-sm">Customize your visual experience</p>
+              <p class="section-description">Customize your visual experience</p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="theme-grid">
               <button
                 v-for="theme in themes"
                 :key="theme.value"
                 @click="settings.theme = theme.value"
                 :class="[
-                  'bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 border-2 transition-all duration-300 hover:scale-105 text-center',
-                  settings.theme === theme.value ? 'border-yellow-500 ring-4 ring-yellow-300 shadow-xl' : 'border-gray-200 hover:border-yellow-300'
+                  'theme-btn',
+                  settings.theme === theme.value ? 'theme-selected' : 'theme-unselected'
                 ]"
               >
-                <div class="text-3xl mb-2">{{ theme.preview }}</div>
-                <div class="font-medium text-gray-800">{{ theme.label }}</div>
-                <div class="flex gap-1 mt-2 justify-center">
-                  <div 
-                    v-for="color in theme.colors" 
+                <div class="theme-preview">{{ theme.preview }}</div>
+                <div class="theme-name">{{ theme.label }}</div>
+                <div class="theme-colors">
+                  <div
+                    v-for="color in theme.colors"
                     :key="color"
-                    class="w-3 h-3 rounded-full"
+                    class="color-dot"
                     :style="{ backgroundColor: color }"
                   ></div>
                 </div>
@@ -204,44 +223,41 @@
           </div>
 
           <!-- Language Selection -->
-          <div class="space-y-4">
-            <div class="border-b-2 border-yellow-200 pb-3">
-              <h3 class="text-xl font-bold text-yellow-700 flex items-center gap-2">
+          <div class="language-section">
+            <div class="section-header">
+              <h3 class="section-title">
                 <span>🌍</span>
                 Language
               </h3>
-              <p class="text-yellow-600 text-sm">Choose your preferred language</p>
+              <p class="section-description">Choose your preferred language</p>
             </div>
 
-            <div class="relative">
-              <select 
-                v-model="settings.language" 
-                class="w-full px-4 py-3 bg-gradient-to-br from-yellow-50 to-white border-2 border-yellow-200 rounded-xl text-gray-800 font-medium focus:outline-none focus:ring-4 focus:ring-yellow-300 focus:border-yellow-400 appearance-none cursor-pointer"
+            <div class="language-select-wrapper">
+              <select
+                v-model="settings.language"
+                class="language-select"
               >
                 <option v-for="lang in languages" :key="lang.value" :value="lang.value">
                   {{ lang.flag }} {{ lang.label }}
                 </option>
               </select>
-              <div class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none text-yellow-600">
-                ▼
-              </div>
+              <div class="select-arrow">▼</div>
             </div>
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex flex-col sm:flex-row gap-4 pt-6">
+          <div class="action-buttons">
             <button
               @click="saveSettings"
               :disabled="saveStatus === 'saving'"
               :class="[
-                'flex-1 px-6 py-3 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg',
-                'bg-yellow-500 hover:bg-yellow-600 text-white',
-                saveStatus === 'saving' ? 'opacity-75 cursor-not-allowed' : ''
+                'save-btn',
+                saveStatus === 'saving' ? 'saving' : ''
               ]"
             >
               {{ getSaveButtonText }}
             </button>
-            <Link href="/home" class="flex-1 px-6 py-3 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg bg-white text-yellow-700 border-2 border-yellow-400 hover:bg-yellow-50 text-center">
+            <Link href="/home" class="home-btn">
               🏠 Back to Home
             </Link>
           </div>
@@ -253,7 +269,10 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
+import { useBackgroundMusic } from '@/composables/useBackgroundMusic';
+
+const { isMusicEnabled, volume, setMusicEnabled, setVolume, initAudio } = useBackgroundMusic();
 
 const settings = ref({
   sound: true,
@@ -262,14 +281,41 @@ const settings = ref({
   difficulty: 'medium',
   autoSubmit: false,
   language: 'en',
-  theme: 'banana'
+  theme: 'banana',
+  backgroundMusic: isMusicEnabled.value,
+  musicVolume: volume.value * 100 // Convert to 0-100 scale
+});
+
+// Watch for music setting changes
+watch(() => settings.value.backgroundMusic, (newValue) => {
+  setMusicEnabled(newValue);
+});
+
+watch(() => settings.value.musicVolume, (newValue) => {
+  setVolume(newValue / 100); // Convert back to 0-1 scale
+});
+
+onMounted(() => {
+  initAudio();
+  settings.value.backgroundMusic = isMusicEnabled.value;
+  settings.value.musicVolume = volume.value * 100;
 });
 
 const difficulties = [
-  { value: 'easy', label: 'Easy (12s)', icon: '🥥', color: 'bg-green-500' },
-  { value: 'medium', label: 'Medium (8s)', icon: '🍍', color: 'bg-yellow-500' },
-  { value: 'hard', label: 'Hard (5s)', icon: '🌶️', color: 'bg-red-500' }
+  { value: 'easy', label: 'Easy (12s)', icon: '🥥', color: 'diff-easy' },
+  { value: 'medium', label: 'Medium (8s)', icon: '🍍', color: 'diff-medium' },
+  { value: 'hard', label: 'Hard (5s)', icon: '🌶️', color: 'diff-hard' }
 ];
+
+function getDifficultyClass(value) {
+  let classes = 'difficulty-btn-base';
+  if (settings.value.difficulty === value) {
+    classes += ' difficulty-selected';
+  } else {
+    classes += ' difficulty-unselected';
+  }
+  return classes;
+}
 
 const languages = [
   { value: 'en', label: 'English', flag: '🇺🇸' },
@@ -307,3 +353,623 @@ const getSaveButtonText = computed(() => {
   }
 });
 </script>
+
+<style scoped>
+/* Keyframes */
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% { transform: translate3d(0, 0, 0); }
+  40%, 43% { transform: translate3d(0, -30px, 0); }
+  70% { transform: translate3d(0, -15px, 0); }
+  90% { transform: translate3d(0, -4px, 0); }
+}
+
+/* Main container */
+.settings-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #fde047, #fbbf24, #fde047);
+  position: relative;
+  overflow: hidden;
+}
+
+/* User menu */
+.user-menu {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+}
+
+.logout-btn {
+  padding: 0.5rem 1rem;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+  transform: scale(1.05);
+}
+
+.auth-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.login-btn {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  color: #a16207;
+  border: 2px solid #fbbf24;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.login-btn:hover {
+  background-color: #fefce8;
+  transform: scale(1.05);
+}
+
+.register-btn {
+  padding: 0.5rem 1rem;
+  background-color: #eab308;
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.register-btn:hover {
+  background-color: #ca8a04;
+  transform: scale(1.05);
+}
+
+/* Floating decorations */
+.decoration-left {
+  position: absolute;
+  left: 1.5rem;
+  top: 1.5rem;
+  font-size: 4rem;
+  animation: bounce 3s infinite;
+}
+
+.decoration-right {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  font-size: 4rem;
+  animation: bounce 3s infinite;
+  animation-delay: 1s;
+}
+
+.decoration-top {
+  position: absolute;
+  top: 25%;
+  right: 3rem;
+  font-size: 4rem;
+  animation: bounce 3s infinite;
+  animation-delay: 2s;
+}
+
+.decoration-bottom {
+  position: absolute;
+  bottom: 25%;
+  left: 3rem;
+  font-size: 4rem;
+  animation: bounce 3s infinite;
+  animation-delay: 0.5s;
+}
+
+/* Content wrapper */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1.5rem 0;
+}
+
+/* Header section */
+.header-section {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.settings-icon {
+  font-size: 3.5rem;
+  margin-bottom: 0.75rem;
+  animation: bounce 2s infinite;
+}
+
+.settings-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #92400e;
+  margin-bottom: 0.5rem;
+}
+
+.settings-subtitle {
+  font-size: 1.25rem;
+  color: #a16207;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+/* Settings wrapper */
+.settings-wrapper {
+  width: 100%;
+  max-width: 56rem;
+  margin: 0 1rem;
+}
+
+.settings-card {
+  background-color: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Section headers */
+.section-header {
+  border-bottom: 2px solid #fed7aa;
+  padding-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #a16207;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-description {
+  color: #d97706;
+  font-size: 0.875rem;
+}
+
+/* Preferences section */
+.preferences-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.preferences-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .preferences-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.setting-card {
+  background: linear-gradient(to bottom right, #fefce8, white);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 2px solid #fed7aa;
+  transition: all 0.3s;
+}
+
+.setting-card:hover {
+  border-color: #fbbf24;
+}
+
+.music-card {
+  grid-column: 1 / -1;
+}
+
+.setting-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.setting-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.setting-icon {
+  font-size: 1.875rem;
+}
+
+.setting-name {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.setting-desc {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Toggle switches */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 3.5rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d1d5db;
+  border-radius: 9999px;
+  transition: all 0.3s;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 1.5rem;
+  width: 1.5rem;
+  left: 0.25rem;
+  bottom: 0.25rem;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.toggle-on {
+  background: linear-gradient(135deg, #eab308 0%, #f59e0b 100%);
+  box-shadow: 0 0 12px rgba(234, 179, 8, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.toggle-on:before {
+  transform: translateX(1.5rem);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 8px rgba(234, 179, 8, 0.4);
+}
+
+/* Volume Control */
+.volume-control {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #fed7aa;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.volume-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #92400e;
+  font-weight: 500;
+}
+
+.volume-icon {
+  font-size: 1.25rem;
+}
+
+.volume-text {
+  font-weight: 600;
+}
+
+.volume-slider {
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background: linear-gradient(to right, #fed7aa 0%, #fbbf24 100%);
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.6);
+  transition: all 0.3s;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.8);
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.6);
+  transition: all 0.3s;
+}
+
+.volume-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.8);
+}
+
+/* Difficulty section */
+.difficulty-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.difficulty-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.difficulty-btn {
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s;
+  transform: scale(1);
+}
+
+.difficulty-btn:hover {
+  transform: scale(1.05);
+}
+
+.difficulty-btn-base {
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s;
+  transform: scale(1);
+  opacity: 0.7;
+}
+
+.difficulty-btn-base:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.difficulty-selected {
+  box-shadow: 0 0 0 4px #fbbf24, 0 0 20px rgba(251, 191, 36, 0.6), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+.difficulty-unselected {
+  opacity: 0.7;
+}
+
+.difficulty-unselected:hover {
+  opacity: 1;
+}
+
+.diff-easy {
+  background-color: #22c55e;
+  color: white;
+}
+
+.diff-medium {
+  background-color: #eab308;
+  color: white;
+}
+
+.diff-hard {
+  background-color: #ef4444;
+  color: white;
+}
+
+.difficulty-icon {
+  font-size: 1.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.difficulty-name {
+  font-weight: 600;
+  color: white;
+}
+
+.difficulty-time {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Theme section */
+.theme-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .theme-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.theme-btn {
+  background: linear-gradient(to bottom right, #f9fafb, white);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  border: 2px solid;
+  transition: all 0.3s;
+  text-align: center;
+  transform: scale(1);
+}
+
+.theme-btn:hover {
+  transform: scale(1.05);
+}
+
+.theme-selected {
+  border-color: #eab308;
+  box-shadow: 0 0 0 4px #fef3c7, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.theme-unselected {
+  border-color: #e5e7eb;
+}
+
+.theme-unselected:hover {
+  border-color: #fbbf24;
+}
+
+.theme-preview {
+  font-size: 1.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.theme-name {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.theme-colors {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.color-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+}
+
+/* Language section */
+.language-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.language-select-wrapper {
+  position: relative;
+}
+
+.language-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to bottom right, #fefce8, white);
+  border: 2px solid #fed7aa;
+  border-radius: 0.75rem;
+  color: #1f2937;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  transition: all 0.3s;
+}
+
+.language-select:focus {
+  box-shadow: 0 0 0 4px #fef3c7;
+  border-color: #fbbf24;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #d97706;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .action-buttons {
+    flex-direction: row;
+  }
+}
+
+.save-btn {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: bold;
+  font-size: 1.125rem;
+  transition: all 0.3s;
+  transform: scale(1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background-color: #eab308;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #ca8a04;
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.save-btn.saving {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.home-btn {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: bold;
+  font-size: 1.125rem;
+  transition: all 0.3s;
+  transform: scale(1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background-color: white;
+  color: #a16207;
+  border: 2px solid #fbbf24;
+  text-align: center;
+}
+
+.home-btn:hover {
+  background-color: #fefce8;
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+</style>
