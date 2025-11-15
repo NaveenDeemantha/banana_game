@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class LoginNotificationEmail extends Mailable
@@ -36,7 +37,10 @@ class LoginNotificationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Login to Your Banana Catcher Account 🔐',
+            subject: 'Account Access Notification - Banana Catcher',
+            from: new Address(config('mail.from.address'), config('mail.from.name')),
+            replyTo: [new Address('security@bananacatcher.com', 'Banana Catcher Security')],
+            tags: ['security', 'login-notification'],
         );
     }
 
@@ -47,6 +51,7 @@ class LoginNotificationEmail extends Mailable
     {
         return new Content(
             view: 'emails.login-notification',
+            text: 'emails.login-notification-text',
         );
     }
 

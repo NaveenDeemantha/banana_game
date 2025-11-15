@@ -28,8 +28,8 @@ Route::get('/leaderboard', function () {
     return Inertia::render('Leaderboard/index');
 })->name('leaderboard');
 
-// Protected game routes - require authentication
-Route::middleware(['auth'])->group(function () {
+// Protected game routes - require authentication and email verification
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', function () {
         return Inertia::render('Home/index');
     })->name('home');
@@ -51,27 +51,27 @@ Route::middleware(['auth'])->group(function () {
     })->name('settings');
 });
 
-// API routes for game scores
-Route::middleware('auth')->group(function () {
+// API routes for game scores - require verification
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/api/scores', [GameScoreController::class, 'store'])->name('scores.store');
     Route::get('/api/scores/history', [GameScoreController::class, 'userHistory'])->name('scores.history');
 });
 
 Route::get('/api/leaderboard', [GameScoreController::class, 'leaderboard'])->name('leaderboard.api');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Admin routes - protected by admin middleware
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+// Admin routes - protected by admin middleware and email verification
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-    
+
     // User management
     Route::resource('users', UserManagementController::class);
-    
+
     // Game score management
     Route::resource('scores', GameScoreManagementController::class)->except(['create', 'store']);
     Route::post('/scores/delete-multiple', [GameScoreManagementController::class, 'destroyMultiple'])->name('scores.destroy-multiple');

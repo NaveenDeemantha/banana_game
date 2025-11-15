@@ -123,77 +123,77 @@
     <div class="container">
         <div class="header">
             <div class="emoji">🔐</div>
-            <h1>New Login Detected</h1>
+            <h1>Account Login Notification</h1>
         </div>
-        
+
         <div class="content">
-            <div class="greeting">Hello {{ $user->name }}! 👋</div>
-            
-            <p>We detected a new login to your <strong>Banana Catcher</strong> account.</p>
-            
+            <div class="greeting">Dear {{ $user->name }},</div>
+
+            <p>We are writing to inform you of a recent login to your Banana Catcher account.</p>
+
             <div class="alert-box">
-                <h3>📍 Login Details</h3>
-                
+                <h3>Login Information</h3>
+
                 <div class="info-row">
-                    <span class="info-label">🕐 Time:</span>
+                    <span class="info-label">Time:</span>
                     <span class="info-value">{{ $loginTime }}</span>
                 </div>
-                
+
                 <div class="info-row">
-                    <span class="info-label">📍 IP Address:</span>
+                    <span class="info-label">IP Address:</span>
                     <span class="info-value">{{ $ipAddress }}</span>
                 </div>
-                
+
                 @if($userAgent)
                 <div class="info-row">
-                    <span class="info-label">💻 Device:</span>
+                    <span class="info-label">Device/Browser:</span>
                     <span class="info-value">{{ $userAgent }}</span>
                 </div>
                 @endif
-                
+
                 <div class="info-row">
-                    <span class="info-label">📧 Email:</span>
+                    <span class="info-label">Account:</span>
                     <span class="info-value">{{ $user->email }}</span>
                 </div>
             </div>
-            
+
             <div class="warning-box">
-                <strong>⚠️ Was this you?</strong>
+                <strong>Account Security Information</strong>
                 <p style="margin: 10px 0 0;">
-                    If you recognize this login, you can safely ignore this email. Your account is secure.
+                    If this login was authorized by you, no further action is required. Your account remains secure.
                 </p>
                 <p style="margin: 10px 0 0;">
-                    If you <strong>did not</strong> perform this login, your account may be compromised. Please secure your account immediately.
+                    If this login was not authorized by you, we recommend that you change your password immediately to secure your account.
                 </p>
                 <center>
                     <a href="{{ url(route('password.request')) }}" class="secure-button">
-                        🔒 Secure My Account
+                        Change Account Password
                     </a>
                 </center>
             </div>
-            
+
             <div class="security-tips">
-                <h4>🛡️ Security Tips:</h4>
+                <h4>Account Security Best Practices:</h4>
                 <ul>
-                    <li>Always use a strong, unique password</li>
-                    <li>Never share your password with anyone</li>
-                    <li>Log out from shared devices</li>
-                    <li>Update your password regularly</li>
-                    <li>Enable two-factor authentication when available</li>
+                    <li>Use a strong, unique password for your account</li>
+                    <li>Do not share your login credentials with others</li>
+                    <li>Log out from public or shared computers after use</li>
+                    <li>Change your password periodically for enhanced security</li>
+                    <li>Enable additional security features when they become available</li>
                 </ul>
             </div>
-            
+
             <p style="font-size: 14px; color: #6B7280; margin-top: 30px;">
-                We send these notifications to help protect your account. If you have any concerns, please contact our support team immediately.
+                This notification helps protect your account security. If you have concerns, please contact our support team.
             </p>
         </div>
-        
+
         <div class="footer">
-            <p><strong>Need Help?</strong></p>
-            <p>Contact our support team at support@bananacatcher.com</p>
+            <p><strong>Need Assistance?</strong></p>
+            <p>Contact our support team for help with your account.</p>
             <p style="margin-top: 20px; color: #9CA3AF; font-size: 12px;">
                 © {{ date('Y') }} Banana Catcher. All rights reserved.<br>
-                This is an automated security notification. Please do not reply to this email.
+                This is an automated security notification.
             </p>
         </div>
     </div>

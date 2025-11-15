@@ -109,69 +109,70 @@
             <div class="emoji">🍌</div>
             <h1>Welcome to Banana Catcher!</h1>
         </div>
-        
+
         <div class="content">
-            <div class="greeting">Hello {{ $user->name }}! 👋</div>
-            
+            <div class="greeting">Dear {{ $user->name }},</div>
+
             <p class="message">
-                Thank you for joining <strong>Banana Catcher</strong> - the most exciting math game where you catch bananas while solving equations!
+                Thank you for registering your account with Banana Catcher. We are pleased to confirm that your account has been successfully created.
             </p>
-            
+
             <p class="message">
-                Your account has been successfully created, and you're now ready to start your mathematical adventure!
+                Your account is now active and you can begin using our platform immediately. We have prepared some helpful information to get you started.
             </p>
-            
+
             <div class="features">
-                <h3 style="color: #F59E0B; margin-top: 0;">What you can do:</h3>
-                
+                <h3 style="color: #F59E0B; margin-top: 0;">Account Features:</h3>
+
                 <div class="feature">
-                    <span class="feature-icon">⚡</span>
-                    <span class="feature-text"><strong>Challenge Yourself</strong> - Choose from Easy, Medium, or Hard difficulty levels</span>
+                    <span class="feature-icon">•</span>
+                    <span class="feature-text"><strong>Difficulty Levels</strong> - Choose from Easy, Medium, or Hard settings</span>
                 </div>
-                
+
                 <div class="feature">
-                    <span class="feature-icon">🏆</span>
-                    <span class="feature-text"><strong>Compete</strong> - Climb the leaderboard and become the top player</span>
+                    <span class="feature-icon">•</span>
+                    <span class="feature-text"><strong>Progress Tracking</strong> - Monitor your performance and scores over time</span>
                 </div>
-                
+
                 <div class="feature">
-                    <span class="feature-icon">📊</span>
-                    <span class="feature-text"><strong>Track Progress</strong> - View your stats and improve your skills</span>
+                    <span class="feature-icon">•</span>
+                    <span class="feature-text"><strong>Leaderboards</strong> - Compare your results with other users</span>
                 </div>
-                
+
                 <div class="feature">
-                    <span class="feature-icon">🎯</span>
-                    <span class="feature-text"><strong>Earn Rewards</strong> - Unlock achievements as you play</span>
+                    <span class="feature-icon">•</span>
+                    <span class="feature-text"><strong>Skill Development</strong> - Practice mathematical problems in an engaging format</span>
                 </div>
             </div>
-            
+
             <div style="text-align: center; margin: 40px 0;">
                 <a href="{{ url(route('login')) }}" class="cta-button">
-                    Start Playing Now! 🎮
+                    Access Your Account
                 </a>
             </div>
-            
+
             <p class="message" style="font-size: 14px; color: #666;">
-                <strong>Quick Tips:</strong><br>
-                • Practice with Easy mode first to get comfortable<br>
-                • Race against the clock to maximize your score<br>
-                • The faster you answer, the more points you earn!<br>
+                <strong>Getting Started:</strong><br>
+                • Begin with Easy difficulty to familiarize yourself with the platform<br>
+                • Complete problems quickly to earn higher scores<br>
+                • Review your performance statistics regularly<br>
             </p>
         </div>
-        
+
         <div class="footer">
-            <p>Happy catching! 🍌</p>
+            <p>Welcome to Banana Catcher</p>
             <p style="margin: 10px 0;">
-                If you have any questions, feel free to reach out to our support team.
+                If you need assistance, please contact our support team at support@bananacatcher.com
             </p>
             <div class="social-links">
-                <a href="#">Help Center</a> | 
-                <a href="#">Contact Us</a> | 
-                <a href="#">Privacy Policy</a>
+                <a href="{{ url('/') }}">Website</a> |
+                <a href="{{ url('/#/privacy') }}">Privacy Policy</a> |
+                <a href="{{ url('/#/terms') }}">Terms of Service</a>
             </div>
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
-                © {{ date('Y') }} Banana Catcher. All rights reserved.<br>
-                You're receiving this email because you created an account.
+                This email was sent to {{ $user->email }} because you created an account with Banana Catcher.<br>
+                Banana Catcher, LLC, 123 Math Street, Learning City, LC 12345<br>
+                © {{ date('Y') }} Banana Catcher. All rights reserved.
             </p>
         </div>
     </div>

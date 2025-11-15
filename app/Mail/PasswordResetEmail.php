@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class PasswordResetEmail extends Mailable
@@ -32,7 +33,10 @@ class PasswordResetEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reset Your Banana Catcher Password 🔑',
+            subject: 'Password Reset Request',
+            from: new Address(config('mail.from.address'), config('mail.from.name')),
+            replyTo: [new Address('security@bananacatcher.com', 'Banana Catcher Security')],
+            tags: ['security', 'password-reset'],
         );
     }
 

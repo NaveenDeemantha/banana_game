@@ -15,8 +15,15 @@ class EnsureUserIsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user() || !$request->user()->isAdmin()) {
+        $user = $request->user();
+
+        if (!$user || !$user->isAdmin()) {
             abort(403, 'Unauthorized access. Admin privileges required.');
+        }
+
+        // Check if email is verified for admin users
+        if (!$user->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
         }
 
         return $next($request);
