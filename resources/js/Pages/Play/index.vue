@@ -133,6 +133,12 @@ const levelParam = new URLSearchParams(window.location.search).get('level') || '
 const levelNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
 const levelTimes = { easy: 12, medium: 8, hard: 5 };
 
+const levelRanges = {
+  easy: { min: 0, max: 3 },
+  medium: { min: 4, max: 6 },
+  hard: { min: 7, max: 10 }
+};
+
 const answerInput = ref(null);
 const imageSrc = ref(null);
 const solution = ref(null);
@@ -142,7 +148,6 @@ const processing = ref(false);
 const feedback = ref(null);
 const timerId = ref(null);
 
-// Score tracking
 const currentScore = ref(0);
 const correctAnswers = ref(0);
 const totalQuestions = ref(0);
@@ -151,23 +156,46 @@ const gameStartTime = ref(Date.now());
 async function fetchQuestion() {
   processing.value = true;
   feedback.value = null;
+
+  let questionData = null;
+  let attempts = 0;
+  const maxAttempts = 50;
+
   try {
-    const res = await fetch('https://marcconrad.com/uob/banana/api.php?out=json&base64=yes');
-    const data = await res.json();
-    if (data && data.question) {
-      imageSrc.value = `data:image/png;base64,${data.question}`;
-      solution.value = data.solution;
+    const range = levelRanges[levelParam];
+    console.log(`Fetching question for ${levelParam} mode. Range: ${range.min}-${range.max}`);
+
+    while (attempts < maxAttempts && !questionData) {
+      const res = await fetch('https://marcconrad.com/uob/banana/api.php?out=json&base64=yes');
+      const data = await res.json();
+
+      if (data && data.question && data.solution !== undefined) {
+        const answerValue = parseInt(data.solution, 10);
+        console.log(`Attempt ${attempts + 1}: Got answer ${answerValue}, need ${range.min}-${range.max}`);
+
+        if (answerValue >= range.min && answerValue <= range.max) {
+          questionData = data;
+          console.log(`✓ Accepted question with answer ${answerValue}`);
+        }
+      }
+
+      attempts++;
+    }
+
+    if (questionData) {
+      imageSrc.value = `data:image/png;base64,${questionData.question}`;
+      solution.value = parseInt(questionData.solution, 10);
       remaining.value = levelTimes[levelParam] ?? 12;
       startTimer();
-      // Focus input after question loads
       await nextTick();
       answerInput.value?.focus();
     } else {
-      feedback.value = { ok: false, message: 'Invalid question from API' };
+      feedback.value = { ok: false, message: 'Could not find question for this difficulty. Please try again.' };
+      console.error(`Failed to find matching question after ${maxAttempts} attempts`);
     }
   } catch (e) {
     feedback.value = { ok: false, message: 'Failed to fetch question' };
-    console.error(e);
+    console.error('Error fetching question:', e);
   } finally {
     processing.value = false;
   }
@@ -200,7 +228,6 @@ function handleSubmit(timedOut = false) {
 
   if (correct) {
     correctAnswers.value += 1;
-    // Award points based on difficulty and time remaining
     const basePoints = { easy: 10, medium: 20, hard: 30 }[levelParam] || 10;
     const timeBonus = remaining.value;
     currentScore.value += basePoints + timeBonus;
@@ -529,7 +556,7 @@ onBeforeUnmount(() => {
   .question-section {
     flex-direction: column;
   }
-  
+
   .question-img {
     max-height: 16rem;
   }

@@ -48,6 +48,10 @@
                 <span class="detail-text">12 seconds per question</span>
               </div>
               <div class="detail-item">
+                <span class="detail-icon">🍌</span>
+                <span class="detail-text">0-3 bananas per question</span>
+              </div>
+              <div class="detail-item">
                 <span class="detail-icon">🎯</span>
                 <span class="detail-text">Perfect for beginners</span>
               </div>
@@ -74,6 +78,10 @@
                 <span class="detail-text">8 seconds per question</span>
               </div>
               <div class="detail-item">
+                <span class="detail-icon">🍌</span>
+                <span class="detail-text">4-6 bananas per question</span>
+              </div>
+              <div class="detail-item">
                 <span class="detail-icon">🎯</span>
                 <span class="detail-text">Moderate challenge</span>
               </div>
@@ -98,6 +106,10 @@
               <div class="detail-item">
                 <span class="detail-icon">⏱️</span>
                 <span class="detail-text">5 seconds per question</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-icon">🍌</span>
+                <span class="detail-text">7-10 bananas per question</span>
               </div>
               <div class="detail-item">
                 <span class="detail-icon">🎯</span>
