@@ -117,6 +117,21 @@
         </button>
       </div>
     </div>
+
+
+    <div class="test-helper">
+      <div class="test-helper-title">Testing</div>
+      <div class="test-helper-content">
+        <div class="test-item">
+          <span class="test-label">Answer:</span>
+          <span class="test-value">{{ solution ?? '—' }}</span>
+        </div>
+        <div class="test-item">
+          <span class="test-label">Level:</span>
+          <span class="test-value">{{ levelParam }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -707,5 +722,58 @@ onBeforeUnmount(() => {
 
 .delay-1s {
   animation-delay: 1s;
+}
+
+.test-helper {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  background-color: rgba(31, 41, 55, 0.95);
+  backdrop-filter: blur(4px);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+  min-width: 150px;
+}
+
+.test-helper-title {
+  color: #FCD34D;
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(252, 211, 77, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.test-helper-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.test-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.test-label {
+  color: #9CA3AF;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.test-value {
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: rgba(234, 179, 8, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  min-width: 40px;
+  text-align: center;
 }
 </style>

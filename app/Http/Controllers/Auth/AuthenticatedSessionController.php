@@ -43,13 +43,11 @@ class AuthenticatedSessionController extends Controller
         $ipAddress = $request->ip();
         $userAgent = $request->userAgent();
 
-        // Send email asynchronously to avoid blocking the login process
         try {
             Mail::to($user->email)->send(
                 new LoginNotificationEmail($user, $loginTime, $ipAddress, $userAgent)
             );
         } catch (\Exception $e) {
-            // Log the error but don't block the login
             Log::error('Failed to send login notification email: ' . $e->getMessage());
         }
 
