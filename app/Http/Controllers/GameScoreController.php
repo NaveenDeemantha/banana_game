@@ -76,7 +76,7 @@ class GameScoreController extends Controller
     public function userHistory(Request $request)
     {
         $user = Auth::user();
-        
+
         $history = $user->gameScores()
             ->orderByDesc('created_at')
             ->limit(10)
