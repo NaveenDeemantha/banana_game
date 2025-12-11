@@ -148,10 +148,11 @@ const levelParam = new URLSearchParams(window.location.search).get('level') || '
 const levelNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
 const levelTimes = { easy: 30, medium: 20, hard: 15 };
 
+// Difficulty based on answer ranges - simpler and more reliable
 const levelRanges = {
-  easy: { min: 0, max: 3 },
-  medium: { min: 4, max: 6 },
-  hard: { min: 7, max: 10 }
+  easy: { min: 0, max: 3 },    // Smaller numbers (0-3)
+  medium: { min: 4, max: 7 },  // Medium numbers (4-7)
+  hard: { min: 8, max: 10 }    // Larger numbers (8-10)
 };
 
 const answerInput = ref(null);
@@ -178,7 +179,7 @@ async function fetchQuestion() {
 
   try {
     const range = levelRanges[levelParam];
-    console.log(`Fetching question for ${levelParam} mode. Range: ${range.min}-${range.max}`);
+    console.log(`Fetching question for ${levelParam} mode. Answer range: ${range.min}-${range.max}`);
 
     while (attempts < maxAttempts && !questionData) {
       const res = await fetch('https://marcconrad.com/uob/banana/api.php?out=json&base64=yes');
@@ -186,10 +187,15 @@ async function fetchQuestion() {
 
       if (data && data.question && data.solution !== undefined) {
         const answerValue = parseInt(data.solution, 10);
-        console.log(`Attempt ${attempts + 1}: Got answer ${answerValue}, need ${range.min}-${range.max}`);
 
+        console.log(`Attempt ${attempts + 1}: Answer: ${answerValue}`);
+
+        // Accept if answer is in range
         if (answerValue >= range.min && answerValue <= range.max) {
-          questionData = data;
+          questionData = {
+            question: data.question,
+            solution: answerValue
+          };
           console.log(`✓ Accepted question with answer ${answerValue}`);
         }
       }
@@ -199,7 +205,7 @@ async function fetchQuestion() {
 
     if (questionData) {
       imageSrc.value = `data:image/png;base64,${questionData.question}`;
-      solution.value = parseInt(questionData.solution, 10);
+      solution.value = questionData.solution;
       remaining.value = levelTimes[levelParam] ?? 12;
       startTimer();
       await nextTick();
