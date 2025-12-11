@@ -210,34 +210,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Keyframes */
-@keyframes float-y {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.95; }
-}
-
 /* Main container */
 .leaderboard-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 25%, #FCD34D 50%, #FBBF24 75%, #F59E0B 100%);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
+  background: #FDE68A;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -259,15 +235,13 @@ onMounted(() => {
   background-color: #ef4444;
   color: white;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 500;
   font-size: 0.875rem;
 }
 
 .logout-btn:hover {
   background-color: #dc2626;
-  transform: scale(1.05);
 }
 
 .auth-links {
@@ -282,15 +256,13 @@ onMounted(() => {
   color: #a16207;
   border: 2px solid #fbbf24;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 500;
   font-size: 0.875rem;
 }
 
 .login-btn:hover {
   background-color: #fefce8;
-  transform: scale(1.05);
 }
 
 .register-btn {
@@ -298,15 +270,13 @@ onMounted(() => {
   background-color: #eab308;
   color: white;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 500;
   font-size: 0.875rem;
 }
 
 .register-btn:hover {
   background-color: #ca8a04;
-  transform: scale(1.05);
 }
 
 /* Banana decorations */
@@ -315,9 +285,8 @@ onMounted(() => {
   left: 1.5rem;
   top: 1.5rem;
   font-size: 4rem;
-  animation: float-y 3s ease-in-out infinite;
   user-select: none;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  opacity: 0.4;
 }
 
 .banana-right {
@@ -325,28 +294,19 @@ onMounted(() => {
   right: 1.5rem;
   bottom: 1.5rem;
   font-size: 4rem;
-  animation: float-y 3s ease-in-out infinite;
-  animation-delay: 1s;
   user-select: none;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  opacity: 0.4;
 }
 
 /* Leaderboard card */
 .leaderboard-card {
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(4px);
-  border: 1px solid #fed7aa;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: 1rem;
   padding: 1.25rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 42rem;
-}
-
-.leaderboard-card:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  border-color: #fdba74;
 }
 
 /* Title section */
@@ -358,7 +318,6 @@ onMounted(() => {
 .trophy-icon {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  animation: float-y 3s ease-in-out infinite;
 }
 
 .leaderboard-title {
@@ -391,7 +350,6 @@ onMounted(() => {
 .difficulty-btn-selected {
   background-color: #eab308;
   color: white;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .difficulty-btn-unselected {
@@ -412,7 +370,6 @@ onMounted(() => {
 .loading-icon {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  animation: spin 1s linear infinite;
 }
 
 .loading-text {
@@ -431,32 +388,25 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 252, 232, 0.9) 100%);
+  background: #FFFFFF;
   border-radius: 0.75rem;
-  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.1), 0 1px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  border: 1px solid #E5E7EB;
 }
 
 .player-row:hover {
-  box-shadow: 0 8px 24px -4px rgba(251, 191, 36, 0.3), 0 4px 12px -2px rgba(0, 0, 0, 0.1);
-  transform: translateX(8px) scale(1.02);
-  border-color: rgba(251, 191, 36, 0.3);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(254, 243, 199, 1) 100%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .first-place {
-  box-shadow: 0 0 0 3px #fbbf24, 0 0 20px rgba(251, 191, 36, 0.5), 0 8px 24px -4px rgba(251, 191, 36, 0.4);
-  background: linear-gradient(135deg, #fefce8 0%, #fef3c7 50%, #fde68a 100%);
-  animation: pulse-subtle 3s ease-in-out infinite;
-}
-
-.first-place:hover {
-  box-shadow: 0 0 0 3px #fbbf24, 0 0 30px rgba(251, 191, 36, 0.7), 0 12px 32px -4px rgba(251, 191, 36, 0.5);
+  border: 2px solid #fbbf24;
+  background: #fef3c7;
 }
 
 .current-user {
-  box-shadow: 0 0 0 2px #60a5fa;
+  border: 2px solid #60a5fa;
   background-color: #eff6ff;
 }
 
@@ -613,15 +563,13 @@ onMounted(() => {
   background-color: #eab308;
   color: white;
   border-radius: 0.75rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 600;
   text-align: center;
 }
 
 .play-btn:hover {
   background-color: #ca8a04;
-  transform: scale(1.05);
 }
 
 .home-btn {
@@ -630,14 +578,12 @@ onMounted(() => {
   color: #a16207;
   border: 2px solid #fbbf24;
   border-radius: 0.75rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 600;
   text-align: center;
 }
 
 .home-btn:hover {
   background-color: #fefce8;
-  transform: scale(1.05);
 }
 </style>
