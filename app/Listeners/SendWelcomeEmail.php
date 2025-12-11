@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Mail\WelcomeEmail;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -21,9 +21,9 @@ class SendWelcomeEmail
     /**
      * Handle the event.
      */
-    public function handle(Registered $event): void
+    public function handle(Verified $event): void
     {
-        // Send welcome email to the newly registered user
+        // Send welcome email after user verifies their email
         Mail::to($event->user->email)->send(new WelcomeEmail($event->user));
     }
 }

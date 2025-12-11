@@ -1,12 +1,13 @@
-Email Address Verification Required - Banana Catcher
+Email Verification OTP - Banana Catcher
 
 Dear {{ $notifiable->name }},
 
 Thank you for registering with Banana Catcher. To complete your account setup and begin using our educational platform, please verify your email address.
 
-Please visit the following link to confirm your email address. This verification link will remain active for 24 hours:
+YOUR VERIFICATION CODE:
+{{ $otp }}
 
-{{ $actionUrl }}
+This code will expire in 15 minutes. Please enter this code on the verification page to complete your registration.
 
 ACCOUNT VERIFICATION BENEFITS:
 • Secure access to your learning progress
@@ -17,9 +18,10 @@ ACCOUNT VERIFICATION BENEFITS:
 IMPORTANT INFORMATION:
 If you did not create an account with Banana Catcher, please disregard this message. No account will be activated without email verification.
 
-ALTERNATIVE VERIFICATION:
-If you cannot click the link above, please copy and paste the following URL into your web browser:
-{{ $actionUrl }}
+VERIFICATION CODE:
+{{ $otp }}
+
+Please enter this code on the verification page. The code is case-sensitive and expires in 15 minutes.
 
 CONTACT INFORMATION:
 Banana Catcher Educational Platform

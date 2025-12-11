@@ -147,12 +147,15 @@
             </p>
 
             <p class="message">
-                Please click the verification button below to confirm your email address.
-                This verification link will remain active for 24 hours.
+                Use the following One-Time Password (OTP) to verify your email address.
+                This OTP will expire in 15 minutes.
             </p>
 
             <div class="button-container">
-                <a href="{{ $actionUrl }}" class="verify-button">Verify Email Address</a>
+                <div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; padding: 20px; border-radius: 8px; font-size: 32px; font-weight: bold; letter-spacing: 8px; text-align: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    {{ $otp }}
+                </div>
+                <p style="margin-top: 15px; font-size: 14px; color: #6b7280;">Enter this code on the verification page</p>
             </div>
 
             <div class="info-box">
@@ -171,8 +174,8 @@
             </div>
 
             <p class="link-text">
-                Alternative verification method: If the button above does not function properly, please copy and paste the following link into your web browser:<br>
-                {{ $actionUrl }}
+                Your verification code: {{ $otp }}<br>
+                This code is valid for 15 minutes only.
             </p>
         </div>
 
