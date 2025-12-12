@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Verified;
 use App\Listeners\SendWelcomeEmail;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,9 +25,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
 
-        // Register event listener for sending welcome email on registration
+        // Register event listener for sending welcome email after email verification
         Event::listen(
-            Registered::class,
+            Verified::class,
             SendWelcomeEmail::class,
         );
     }

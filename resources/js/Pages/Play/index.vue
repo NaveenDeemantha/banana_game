@@ -148,10 +148,11 @@ const levelParam = new URLSearchParams(window.location.search).get('level') || '
 const levelNames = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
 const levelTimes = { easy: 30, medium: 20, hard: 15 };
 
+// Difficulty based on answer ranges - simpler and more reliable
 const levelRanges = {
-  easy: { min: 0, max: 3 },
-  medium: { min: 4, max: 6 },
-  hard: { min: 7, max: 10 }
+  easy: { min: 0, max: 3 },    // Smaller numbers (0-3)
+  medium: { min: 4, max: 7 },  // Medium numbers (4-7)
+  hard: { min: 8, max: 10 }    // Larger numbers (8-10)
 };
 
 const answerInput = ref(null);
@@ -178,7 +179,7 @@ async function fetchQuestion() {
 
   try {
     const range = levelRanges[levelParam];
-    console.log(`Fetching question for ${levelParam} mode. Range: ${range.min}-${range.max}`);
+    console.log(`Fetching question for ${levelParam} mode. Answer range: ${range.min}-${range.max}`);
 
     while (attempts < maxAttempts && !questionData) {
       const res = await fetch('https://marcconrad.com/uob/banana/api.php?out=json&base64=yes');
@@ -186,10 +187,15 @@ async function fetchQuestion() {
 
       if (data && data.question && data.solution !== undefined) {
         const answerValue = parseInt(data.solution, 10);
-        console.log(`Attempt ${attempts + 1}: Got answer ${answerValue}, need ${range.min}-${range.max}`);
 
+        console.log(`Attempt ${attempts + 1}: Answer: ${answerValue}`);
+
+        // Accept if answer is in range
         if (answerValue >= range.min && answerValue <= range.max) {
-          questionData = data;
+          questionData = {
+            question: data.question,
+            solution: answerValue
+          };
           console.log(`✓ Accepted question with answer ${answerValue}`);
         }
       }
@@ -199,7 +205,7 @@ async function fetchQuestion() {
 
     if (questionData) {
       imageSrc.value = `data:image/png;base64,${questionData.question}`;
-      solution.value = parseInt(questionData.solution, 10);
+      solution.value = questionData.solution;
       remaining.value = levelTimes[levelParam] ?? 12;
       startTimer();
       await nextTick();
@@ -318,24 +324,9 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes float-smooth {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-10px) rotate(2deg); }
-  50% { transform: translateY(-5px) rotate(0deg); }
-  75% { transform: translateY(-12px) rotate(-2deg); }
-}
-
 .game-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 25%, #FCD34D 50%, #FBBF24 75%, #F59E0B 100%);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
+  background: #FDE68A;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -361,8 +352,7 @@ onBeforeUnmount(() => {
   background-color: #EF4444;
   color: #FFFFFF;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -370,7 +360,6 @@ onBeforeUnmount(() => {
 
 .logout-btn:hover {
   background-color: #DC2626;
-  transform: scale(1.05);
 }
 
 .auth-links {
@@ -387,8 +376,7 @@ onBeforeUnmount(() => {
   background-color: #EAB308;
   color: #FFFFFF;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -396,7 +384,6 @@ onBeforeUnmount(() => {
 
 .register-btn:hover {
   background-color: #CA8A04;
-  transform: scale(1.05);
 }
 
 .banana-icon-left {
@@ -406,8 +393,7 @@ onBeforeUnmount(() => {
   font-size: 4rem;
   user-select: none;
   display: inline-block;
-  filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.04)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.1));
-  animation: float-smooth 6s ease-in-out infinite;
+  opacity: 0.4;
 }
 
 .banana-icon-right {
@@ -417,29 +403,21 @@ onBeforeUnmount(() => {
   font-size: 4rem;
   user-select: none;
   display: inline-block;
-  filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.04)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.1));
-  animation: float-smooth 6s ease-in-out infinite;
+  opacity: 0.4;
 }
 
 .game-card {
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(4px);
-  border: 1px solid #FED7AA;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: 1rem;
   padding: 2rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 56rem;
   margin-left: 1rem;
   margin-right: 1rem;
   max-height: 90vh;
   overflow-y: auto;
-}
-
-.game-card:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  border-color: #FCD34D;
 }
 
 .header-section {
@@ -460,7 +438,7 @@ onBeforeUnmount(() => {
 }
 
 .target-icon {
-  animation: float-smooth 6s ease-in-out infinite;
+  display: inline-block;
 }
 
 .level-info {
@@ -553,7 +531,7 @@ onBeforeUnmount(() => {
   background-color: #FFFFFF;
   border-radius: 0.75rem;
   padding: 1rem;
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1), inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -581,7 +559,7 @@ onBeforeUnmount(() => {
   background-color: #FFFFFF;
   border-radius: 0.75rem;
   padding: 2rem 1rem;
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1), inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   text-align: center;
   color: #D97706;
   display: flex;
@@ -593,7 +571,6 @@ onBeforeUnmount(() => {
 }
 
 .loading-icon {
-  animation: spin 1s linear infinite;
   font-size: 1.875rem;
   line-height: 2.25rem;
   margin-bottom: 0.25rem;
@@ -634,15 +611,13 @@ onBeforeUnmount(() => {
   background-color: #EAB308;
   color: #FFFFFF;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 600;
   opacity: 1;
 }
 
 .submit-btn:hover {
   background-color: #CA8A04;
-  transform: scale(1.05);
 }
 
 .submit-btn:disabled {
@@ -657,15 +632,13 @@ onBeforeUnmount(() => {
   background-color: #F3F4F6;
   color: #374151;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 500;
   opacity: 1;
 }
 
 .skip-btn:hover {
   background-color: #E5E7EB;
-  transform: scale(1.05);
 }
 
 .skip-btn:disabled {
@@ -729,10 +702,9 @@ onBeforeUnmount(() => {
   bottom: 1.5rem;
   left: 1.5rem;
   background-color: rgba(31, 41, 55, 0.95);
-  backdrop-filter: blur(4px);
   border-radius: 0.75rem;
   padding: 1rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 20;
   min-width: 150px;
 }

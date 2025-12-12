@@ -150,29 +150,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes float-smooth {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-10px) rotate(2deg); }
-  50% { transform: translateY(-5px) rotate(0deg); }
-  75% { transform: translateY(-12px) rotate(-2deg); }
-}
-
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.02); }
-}
-
 .difficulty-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 25%, #FCD34D 50%, #FBBF24 75%, #F59E0B 100%);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
+  background: #FDE68A;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -231,17 +211,15 @@ onMounted(() => {
   padding-right: 0.5rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+  background: #DC2626;
   color: #FFFFFF;
   font-weight: 500;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transition: all 0.3s;
 }
 
 .logout-btn:hover {
-  background: linear-gradient(135deg, #B91C1C 0%, #991B1B 100%);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background: #B91C1C;
 }
 
 .decor-left {
@@ -252,7 +230,6 @@ onMounted(() => {
   user-select: none;
   display: inline-block;
   opacity: 0.4;
-  animation: float-smooth 6s ease-in-out infinite;
 }
 
 .decor-right {
@@ -263,8 +240,6 @@ onMounted(() => {
   user-select: none;
   display: inline-block;
   opacity: 0.4;
-  animation: float-smooth 6s ease-in-out infinite;
-  animation-delay: 1s;
 }
 
 .main-content {
@@ -284,19 +259,14 @@ onMounted(() => {
   font-size: 2.5rem;
   line-height: 1;
   margin-bottom: 0.75rem;
-  animation: pulse-subtle 3s ease-in-out infinite;
 }
 
 .hero-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #1F2937;
+  color: #D97706;
   line-height: 1.2;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #D97706 0%, #EA580C 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
 }
 
 .hero-subtitle {
@@ -318,50 +288,50 @@ onMounted(() => {
 }
 
 .card-easy {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FFFBEB 100%);
+  background: #FFFFFF;
   border-radius: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid #F3F4F6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E5E7EB;
   overflow: hidden;
   transition: all 0.3s;
 }
 
 .card-easy:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  transform: translateY(-0.5rem);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-0.25rem);
 }
 
 .card-medium {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FFFBEB 100%);
+  background: #FFFFFF;
   border-radius: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid #F3F4F6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E5E7EB;
   overflow: hidden;
   transition: all 0.3s;
 }
 
 .card-medium:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  transform: translateY(-0.5rem);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-0.25rem);
 }
 
 .card-hard {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FFFBEB 100%);
+  background: #FFFFFF;
   border-radius: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid #F3F4F6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E5E7EB;
   overflow: hidden;
   transition: all 0.3s;
 }
 
 .card-hard:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  transform: translateY(-0.5rem);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-0.25rem);
 }
 
 .card-content {
   padding: 2rem;
-  background: linear-gradient(135deg, #4ADE80 0%, #059669 100%);
+  background: #22C55E;
   color: #FFFFFF;
   min-height: 280px;
   display: flex;
@@ -370,11 +340,11 @@ onMounted(() => {
 }
 
 .card-medium .card-content {
-  background: linear-gradient(135deg, #FB923C 0%, #EA580C 100%);
+  background: #F59E0B;
 }
 
 .card-hard .card-content {
-  background: linear-gradient(135deg, #F87171 0%, #E11D48 100%);
+  background: #EF4444;
 }
 
 .card-header {
@@ -447,58 +417,43 @@ onMounted(() => {
 .start-btn-easy {
   width: 100%;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  background: #FFFFFF;
   color: #16A34A;
   font-weight: 600;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s;
-  transform: scale(1);
-  background-color: #FFFFFF;
+  transition: background 0.3s;
 }
 
 .start-btn-easy:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  background-color: #F0FDF4;
-  transform: scale(1);
+  background: #F0FDF4;
 }
 
 .start-btn-medium {
   width: 100%;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  background: #FFFFFF;
   color: #EA580C;
   font-weight: 600;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s;
-  transform: scale(1);
-  background-color: #FFFFFF;
+  transition: background 0.3s;
 }
 
 .start-btn-medium:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  background-color: #FFF7ED;
-  transform: scale(1);
+  background: #FFF7ED;
 }
 
 .start-btn-hard {
   width: 100%;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  background: #FFFFFF;
   color: #DC2626;
   font-weight: 600;
   border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s;
-  transform: scale(1);
-  background-color: #FFFFFF;
+  transition: background 0.3s;
 }
 
 .start-btn-hard:hover {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  background-color: #FEF2F2;
-  transform: scale(1);
+  background: #FEF2F2;
 }
 
 .back-section {

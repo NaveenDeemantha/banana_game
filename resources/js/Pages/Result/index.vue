@@ -170,42 +170,10 @@ function getPerformanceMessage(score) {
 </template>
 
 <style scoped>
-/* Keyframes */
-@keyframes float-y {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes bounce {
-  0%, 20%, 53%, 80%, 100% { transform: translate3d(0, 0, 0); }
-  40%, 43% { transform: translate3d(0, -30px, 0); }
-  70% { transform: translate3d(0, -15px, 0); }
-  90% { transform: translate3d(0, -4px, 0); }
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes bounce-in {
-  0% { transform: scale(0.9); opacity: 0; }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.05); }
-}
-
 /* Main container */
 .result-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 25%, #FCD34D 50%, #FBBF24 75%, #F59E0B 100%);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
+  background: #FDE68A;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -227,15 +195,13 @@ function getPerformanceMessage(score) {
   background-color: #ef4444;
   color: white;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 500;
   font-size: 0.875rem;
 }
 
 .logout-btn:hover {
   background-color: #dc2626;
-  transform: scale(1.05);
 }
 
 .auth-links {
@@ -250,15 +216,13 @@ function getPerformanceMessage(score) {
   color: #a16207;
   border: 2px solid #fbbf24;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 500;
   font-size: 0.875rem;
 }
 
 .login-btn:hover {
   background-color: #fefce8;
-  transform: scale(1.05);
 }
 
 .register-btn {
@@ -266,15 +230,13 @@ function getPerformanceMessage(score) {
   background-color: #eab308;
   color: white;
   border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   font-weight: 500;
   font-size: 0.875rem;
 }
 
 .register-btn:hover {
   background-color: #ca8a04;
-  transform: scale(1.05);
 }
 
 /* Banana decorations */
@@ -283,9 +245,8 @@ function getPerformanceMessage(score) {
   left: 1.5rem;
   top: 1.5rem;
   font-size: 4rem;
-  animation: float-y 3s ease-in-out infinite;
   user-select: none;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  opacity: 0.4;
 }
 
 .banana-right {
@@ -293,29 +254,20 @@ function getPerformanceMessage(score) {
   right: 1.5rem;
   bottom: 1.5rem;
   font-size: 4rem;
-  animation: float-y 3s ease-in-out infinite;
-  animation-delay: 1s;
   user-select: none;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  opacity: 0.4;
 }
 
 /* Result card */
 .result-card {
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(4px);
-  border: 1px solid #fed7aa;
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: 1rem;
   padding: 1rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 42rem;
   margin: 1rem;
-}
-
-.result-card:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  border-color: #fdba74;
 }
 
 /* Title section */
@@ -327,8 +279,6 @@ function getPerformanceMessage(score) {
 .celebration-icon {
   font-size: 3.5rem;
   margin-bottom: 0.5rem;
-  animation: float-y 3s ease-in-out infinite, pulse-subtle 2s ease-in-out infinite;
-  filter: drop-shadow(0 10px 25px rgba(251, 191, 36, 0.5));
 }
 
 .performance-title {
@@ -356,12 +306,8 @@ function getPerformanceMessage(score) {
   height: 8rem;
   border-radius: 50%;
   background-color: white;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 0.5rem;
-}
-
-.score-animated {
-  animation: bounce 1s;
 }
 
 .score-number {
@@ -455,39 +401,34 @@ function getPerformanceMessage(score) {
 }
 
 .achievement-badge {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  background: #FDE68A;
   border-radius: 0.5rem;
   padding: 0.5rem;
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid rgba(251, 191, 36, 0.3);
-  box-shadow: 0 4px 8px -2px rgba(251, 191, 36, 0.3);
-  animation: bounce-in 0.6s ease-out;
+  transition: background 0.3s;
+  border: 2px solid #FBBF24;
 }
 
 .achievement-badge:hover {
-  transform: scale(1.1) rotate(3deg);
-  box-shadow: 0 12px 24px -4px rgba(251, 191, 36, 0.5);
+  background: #FCD34D;
 }
 
 .achievement-shooter {
-  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-  border-color: rgba(74, 222, 128, 0.3);
-  box-shadow: 0 4px 8px -2px rgba(74, 222, 128, 0.3);
+  background: #BBF7D0;
+  border-color: #4ADE80;
 }
 
 .achievement-shooter:hover {
-  box-shadow: 0 12px 24px -4px rgba(74, 222, 128, 0.5);
+  background: #86EFAC;
 }
 
 .achievement-scorer {
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-  border-color: rgba(96, 165, 250, 0.3);
-  box-shadow: 0 4px 8px -2px rgba(96, 165, 250, 0.3);
+  background: #BFDBFE;
+  border-color: #60A5FA;
 }
 
 .achievement-scorer:hover {
-  box-shadow: 0 12px 24px -4px rgba(96, 165, 250, 0.5);
+  background: #93C5FD;
 }
 
 .badge-icon {
@@ -511,7 +452,7 @@ function getPerformanceMessage(score) {
 
 /* Record notice */
 .record-notice {
-  background: linear-gradient(to right, #fbbf24, #fb923c);
+  background: #FBBF24;
   border-radius: 0.75rem;
   padding: 0.75rem;
   margin-bottom: 1rem;
@@ -550,17 +491,11 @@ function getPerformanceMessage(score) {
   text-align: center;
   font-weight: 600;
   border-radius: 0.75rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s;
+  transition: background 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
-}
-
-.action-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .play-btn {
@@ -618,12 +553,8 @@ function getPerformanceMessage(score) {
   height: 2rem;
   border-radius: 50%;
   color: white;
-  transition: transform 0.2s;
+  transition: background 0.3s;
   font-size: 0.875rem;
-}
-
-.share-btn:hover {
-  transform: scale(1.1);
 }
 
 .share-mobile {
